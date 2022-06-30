@@ -12,7 +12,6 @@ router.get('/', function(req, res, next) {
         code: code,
         redirect_uri: "http://localhost:3000/callback/",
         grant_type: 'authorization_code',
-        scope: 'user-library-read playlist-modify-private'
       },
       headers: {
         'Authorization': 'Basic ' + (new Buffer(process.env.CLIENT_ID + ':' + process.env.CLIENT_SECRET).toString('base64'))

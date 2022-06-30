@@ -5,8 +5,10 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
     const code = 'code';
     const redirect_uri = "http://localhost:3000/callback/"
-  
-    res.redirect(`https://accounts.spotify.com/authorize?response_type=${code}&client_id=${process.env.CLIENT_ID}&redirect_uri=${redirect_uri}`);
+    const scope = 'user-library-read playlist-modify-private';
+    
+    res.redirect(`https://accounts.spotify.com/authorize?response_type=${code}&client_id=${process.env.CLIENT_ID}&scope=${scope}&redirect_uri=${redirect_uri}`);
+
 });
 
 module.exports = router;
