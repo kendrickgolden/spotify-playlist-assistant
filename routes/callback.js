@@ -26,7 +26,7 @@ router.get('/', function(req, res, next) {
               refresh_token = body.refresh_token;
               
           exports.token = access_token;
-          console.log('access token:', access_token);
+          //console.log('access token:', access_token);
           var options = {
             url: 'https://api.spotify.com/v1/me',
             headers: { 'Authorization': 'Bearer ' + access_token },
@@ -35,6 +35,7 @@ router.get('/', function(req, res, next) {
   
           request.get(options, function(error, response, body) {
             console.log(body);
+            exports.user_id = body.id;
           });
   
           res.redirect(`/#?access_token=${access_token}&refresh_token=${refresh_token}`);
