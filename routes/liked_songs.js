@@ -3,6 +3,7 @@ var router = express.Router();
 var request = require('request');
 const callbackRouter = require('./callback');
 const fetch = require('node-fetch');
+const minValue = 10;
 
 router.get('/',function(req, res, next) {
     const token = callbackRouter.token;
@@ -10,25 +11,18 @@ router.get('/',function(req, res, next) {
     const limit = 50;
     var offset = 0;
     var total_songs = 1;
-    var artist_list = [];
+    var artist_map = new Map();
 
+    likedSongsMain();
 
-    function updateTotal(data) {
-        //console.log(data);
-        for(var i = 0; i < data.items.length; i++) {
-            var current_track = data.items[i].track;
-            //console.log(current_track);
-            for(var artist of current_track.artists) {
-                if(!artist_list.includes(artist.name)) {
-                    //console.log(artist.name);
-                    artist_list.push(artist.name);
-                }
-            }
-        }
-        total_songs = data.total;
+    //creates artist playlists populated with all liked tracks where artists is listed as a creator
+    async function likedSongsMain(){
+        await getLikedTracks();
+        await create_playlists();
     }
 
-    async function temp_func(){
+    //gets all of a user's liked tracks
+    async function getLikedTracks(){
         while(offset < total_songs) {
             var fetchPromise = fetch(`https://api.spotify.com/v1/me/tracks?limit=${limit}&offset=${offset}`, {
                 method: 'GET',
@@ -42,41 +36,47 @@ router.get('/',function(req, res, next) {
                     }
                     return response.json();
                 })
-                .then(data => updateTotal(data))
+                .then(data => createArtistMap(data))
                 .catch(error => {
                     console.error(`Could not get liked_songs: ${error}`);
                 });
-
-                //console.log(total_songs);
                 offset+=50;
         }
     }
 
-    //returns list of user's liked songs
-    async function iterate_liked_songs(){
-        //console.log(user_id);
-        await temp_func();
-        //console.log(artist_list);
-        create_playlists();
 
+    //Creates map of form artist: ["track1_uri,track2_uri,..."]
+    function createArtistMap(data) {
+        for(var i = 0; i < data.items.length; i++) {
+            var current_track = data.items[i].track;
+            for(var artist of current_track.artists) {
+                if(!artist_map.has(artist.name)) {
+                    var new_tracklist = [];
+                    new_tracklist.push(current_track.uri);
+                    artist_map.set(artist.name,new_tracklist);
+                } else {
+                    var exisiting_tracklist = artist_map.get(artist.name);
+                    exisiting_tracklist.push(current_track.uri);
+                    artist_map.set(artist.name,exisiting_tracklist);
+                }
+            }
+        }
+        total_songs = data.total;
     }
-
-    /*  creates playlist for each artist of user's liked songs
-        TODO: create option to choose minimum number of songs (set default to (5)?)
-    */
-    async function create_playlists(){
-        artist_list.sort((a,b) => a.localeCompare(b));
-        //console.log(artist_list);
-        for(var artist of artist_list) {
-            console.log(artist);
+        
+   //  creates playlist for each artist of user's liked songs
+   async function create_playlists(){
+    //artist_list.sort((a,b) => a.localeCompare(b));
+    for(var [key, value] of artist_map.entries()) {
+        if(value.length >= minValue) {        
             var fetchPromise = fetch(`https://api.spotify.com/v1/users/${user_id}/playlists`, {
                 method: 'POST',
                 headers: { 'Authorization' : 'Bearer ' + token},
-                body: JSON.stringify({"name" : artist})
+                body: JSON.stringify({"name" : "Artist Playlist: " + key})
                 
             });
 
-             await fetchPromise
+            await fetchPromise
                 .then(response => {
                     if (!response.ok) {
                         console.log(response);
@@ -84,19 +84,38 @@ router.get('/',function(req, res, next) {
                     }
                     return response.json();
                 })
-                .then(data => console.log(data))
+                .then(data => addSongs(data, value))
                 .catch(error => {
                     console.error(`Could not create artist playlists: ${error}`);
                 });
-                //console.log("success");
+
+            }
         }
     }
 
+    //populate artist playlist with songs
+    async function addSongs(data, value) {
+        var playlist_id = data.id;
+        var fetchPromise = fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks`, {
+                    method: 'POST',
+                    headers: { 'Authorization' : 'Bearer ' + token},
+                    body: JSON.stringify({"uris" : value})
+                });
 
-    iterate_liked_songs();
-
+        await fetchPromise
+            .then(response => {
+                if (!response.ok) {
+                    console.log(response);
+                    throw new Error(`HTTP error: ${response} ` );
+                }
+                return response.json();
+            })
+            .then(data => console.log("success"))
+            .catch(error => {
+                console.error(`Could not add songs to playlist: ${error}`);
+            });
+    }
+    
 });
-
-
 
 module.exports = router;
