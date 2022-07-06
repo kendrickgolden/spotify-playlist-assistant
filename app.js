@@ -12,6 +12,7 @@ const usersRouter = require('./routes/users');
 const callbackRouter = require('./routes/callback');
 const loginRouter = require('./routes/login');
 const lsRouter = require('./routes/liked_songs');
+const upRouter = require('./routes/update_playlists')
 
 const app = express();
 
@@ -36,7 +37,7 @@ app.use('/users', usersRouter);
 app.use('/callback', callbackRouter.router);
 app.use('/login', loginRouter);
 app.use('/liked_songs', lsRouter);
-
+app.use('/update_playlists', upRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

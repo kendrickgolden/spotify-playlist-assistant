@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const request = require('request');
 const fetch = require('node-fetch');
+const mongoose = require('mongoose');
+const User = require('../models/user');
 
 /* Authorization code taken from Spotify API Authorization Code Flow Guide: https://github.com/spotify/web-api-auth-examples/blob/master/authorization_code/app.js*/
 router.get('/', function(req, res, next) {
@@ -35,6 +37,16 @@ router.get('/', function(req, res, next) {
           request.get(options, function(error, response, body) {
             //console.log(body);
             exports.user_id = body.id;
+            User.findOne({ 'id' : body.id}, function(err, existing_user) {
+              if (err) return handleError(err);
+              if(existing_user===null){
+                User.create({id: body.id, playlists : []});
+              } else {
+               // console.log("test");
+              }
+
+            });
+
           });
   
           res.redirect(`/#?access_token=${access_token}&refresh_token=${refresh_token}`);
@@ -47,5 +59,22 @@ router.get('/', function(req, res, next) {
 });
 
 
+
+
+function userCreate(id, playlists, cb) {
+  userdetail = {first_name:first_name , family_name: family_name }
+  
+  var user = new User(userdetail);
+       
+  user.save(function (err) {
+    if (err) {
+      cb(err, null)
+      return
+    }
+    console.log('New User: ' + user);
+    users.push(user)
+    cb(null, user)
+  }  );
+}
 
 exports.router = router;

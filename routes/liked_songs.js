@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var request = require('request');
 const callbackRouter = require('./callback');
 const fetch = require('node-fetch');
-const minValue = 10;
+const minValue = 25;
+const User = require('../models/user');
 
 router.get('/',function(req, res, next) {
     const token = callbackRouter.token;
@@ -65,30 +65,28 @@ router.get('/',function(req, res, next) {
     }
         
    //  creates playlist for each artist of user's liked songs
-   async function create_playlists(){
-    //artist_list.sort((a,b) => a.localeCompare(b));
-    for(var [key, value] of artist_map.entries()) {
-        if(value.length >= minValue) {        
-            var fetchPromise = fetch(`https://api.spotify.com/v1/users/${user_id}/playlists`, {
-                method: 'POST',
-                headers: { 'Authorization' : 'Bearer ' + token},
-                body: JSON.stringify({"name" : "Artist Playlist: " + key})
-                
-            });
-
-            await fetchPromise
-                .then(response => {
-                    if (!response.ok) {
-                        console.log(response);
-                        throw new Error(`HTTP error: ${response} ` );
-                    }
-                    return response.json();
-                })
-                .then(data => addSongs(data, value))
-                .catch(error => {
-                    console.error(`Could not create artist playlists: ${error}`);
+    async function create_playlists(){
+        for(var [key, value] of artist_map.entries()) {
+            if(value.length >= minValue) {        
+                var fetchPromise = fetch(`https://api.spotify.com/v1/users/${user_id}/playlists`, {
+                    method: 'POST',
+                    headers: { 'Authorization' : 'Bearer ' + token},
+                    body: JSON.stringify({"name" : "Artist Playlist: " + key})
+                    
                 });
 
+                await fetchPromise
+                    .then(response => {
+                        if (!response.ok) {
+                            console.log(response);
+                            throw new Error(`HTTP error: ${response} ` );
+                        }
+                        return response.json();
+                    })
+                    .then(data => addSongs(data, value))
+                    .catch(error => {
+                        console.error(`Could not create artist playlists: ${error}`);
+                    });
             }
         }
     }
@@ -96,6 +94,10 @@ router.get('/',function(req, res, next) {
     //populate artist playlist with songs
     async function addSongs(data, value) {
         var playlist_id = data.id;
+        const user = await User.findOne({id : callbackRouter.user_id});
+        user.playlists.push(data.id);
+        user.save();
+
         var fetchPromise = fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks`, {
                     method: 'POST',
                     headers: { 'Authorization' : 'Bearer ' + token},
