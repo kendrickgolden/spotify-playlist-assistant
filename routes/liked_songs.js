@@ -15,11 +15,10 @@ router.get('/',function(req, res, next) {
 
     likedSongsMain();
 
+    //TODO: Figure out why Lil Uzi Vert playlist doesn't have any songs added; 
     //creates artist playlists populated with all liked tracks where artists is listed as a creator
     async function likedSongsMain(){
-        console.log("A");
         await getLikedTracks();
-        console.log("B");
         await create_playlists();
     }
 
@@ -44,7 +43,6 @@ router.get('/',function(req, res, next) {
                 });
                 offset+=50;
         }
-        console.log(artist_map.size);
     }
 
 
@@ -74,9 +72,7 @@ router.get('/',function(req, res, next) {
     async function create_playlists(){
         for(var [artist_id, value] of artist_map.entries()) {
             var tracklist = value.tracklist;
-            //console.log(tracklist);
             if(tracklist.length >= minValue) {        
-                console.log("test")
                 var fetchPromise = fetch(`https://api.spotify.com/v1/users/${user_id}/playlists`, {
                     method: 'POST',
                     headers: { 'Authorization' : 'Bearer ' + token},
@@ -103,6 +99,8 @@ router.get('/',function(req, res, next) {
     //populate artist playlist with songs
     async function addSongs(playlist, artist_id, tracklist) {
         console.log("addSongs");
+        console.log(tracklist);
+        console.log(typeof tracklist);
         var fetchPromise = fetch(`https://api.spotify.com/v1/playlists/${playlist.id}/tracks`, {
                     method: 'POST',
                     headers: { 'Authorization' : 'Bearer ' + token},
@@ -133,7 +131,6 @@ router.get('/',function(req, res, next) {
         };
         user.playlists.push(JSON.stringify(playlist));
         await user.save();
-        console.log("success")
     }
     
 });

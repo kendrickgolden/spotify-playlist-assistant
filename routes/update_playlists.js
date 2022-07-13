@@ -6,7 +6,6 @@ const User = require('../models/user');
 const { map, reject } = require('async');
 
 router.get('/',function(req, res, next) {
-    //TODO: Scan liked songs for artist in saved playlists and update
     const token = callbackRouter.token;
     const user_id = callbackRouter.user_id;
     let artist_map = new Map();
@@ -15,17 +14,12 @@ router.get('/',function(req, res, next) {
 
     async function updateSongs(){
         await getPlaylists();
-
-        //TODO: create arrays of songs to be added, and then add in groups
-        await updateMap();
-        
-        //updatePlaylists();
-        console.log(artist_map);
+        await updateMap(); 
+        await updatePlaylists();
+        console.log("done");
     }
 
     function getPlaylists() {
-       // return new Promise((res, rej) => {
-            //console.log("D");
             return new Promise (resolve => User.findOne({id: user_id}, async (error,data) => {
                 if(error){
                     console.log("Could not find playlists:" + error);
@@ -36,8 +30,6 @@ router.get('/',function(req, res, next) {
                         artist_map.set(playlist_obj.artist_id,map_value);
 
                         await getPlaylistSongs(map_value);
-                    //  console.log(artist_map);
-                    //console.log("A");
                     }
                 } 
                 resolve();
@@ -51,7 +43,6 @@ router.get('/',function(req, res, next) {
         let offset = 0;
         let total_songs = 1;
         while(offset < total_songs) {
-           // console.log("A");
             let fetchPromise = fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks?fields=total,items(track.id)&limit=50&offset=${offset}`, {
                 method: 'GET',
                 headers: { 'Authorization' : 'Bearer ' + token}
@@ -70,7 +61,6 @@ router.get('/',function(req, res, next) {
                 .catch(error => {
                     console.error(`Could not get playlist songs: ${error}`);
                 });
-                offset+=50;
         }
     }
 
@@ -78,10 +68,8 @@ router.get('/',function(req, res, next) {
     function createSongArray(data, tracklist){
         let song_array = data.items.map(x => x.track.id);
         for(song of song_array) {
-            //console.log(song);
             tracklist.push(song);
         }
-        //tracklist = song_array;
         return data.total;
     }
   
@@ -91,7 +79,6 @@ router.get('/',function(req, res, next) {
         let total_songs = 1;
 
         while(offset < total_songs) {
-            //console.log("b")
             let fetchPromise = fetch(`https://api.spotify.com/v1/me/tracks?limit=50&offset=${offset}`, {
                 method: 'GET',
                 headers: { 'Authorization' : 'Bearer ' + token}
@@ -107,14 +94,11 @@ router.get('/',function(req, res, next) {
                 .then(data => addNewSongs(data))
                 .then(data => total_songs = data)
                 .then(offset+=50)
-                //.then(console.log("testt"))
                 .catch(error => {
                     console.error(`Could not get liked_songs: ${error}`);
                 });
  
             }
-           // console.log("o: " + offset)
-          //  console.log("t: " + total_songs)
             resolve();
         });
     }
@@ -128,106 +112,40 @@ router.get('/',function(req, res, next) {
                 } 
             }
         }
-        //console.log("total: " + data.total);
         return data.total;
     }
 
-  
-     /*        const playlists = await User.where('id').equals(user_id).select("playlists").then(query => {
-            console.log(JSON.stringify(query.playlists));
-        });
-      //  for(let playlist of playlists.playlist) {
-        //    console.log("playlist: " + playlist);
-         //   let playlist_obj = JSON.parse(playlist);
-        //    console.log("OBJ: " + playlist_obj);
-           // artist_map.set(playlist_obj.artist_id,playlist_obj.id);
-      //  }
-    }*/
+    async function updatePlaylists(){
+        return new Promise(async resolve =>  {
+            for(value of artist_map.values()){
+                if(!value.new_tracks.length==0) {
+                    console.log("a");
+                    let playlist_id = value.playlist_id;
+                    let track_uris = value.new_tracks.map(x => "spotify:track:" + x);
+                    console.log(track_uris);
+                    console.log(typeof track_uris);
 
-     /*   const playlists = await User.where('id').equals(user_id).select("playlists").exec((error,query) => {
-            if(error){
-                console.log(error);
-            } else {
-                console.log(query[0].playlists);
-            }
-            
-               for(let playlist of playlists.playlist) {
-                    console.log("playlist: " + playlist);
-                    let playlist_obj = JSON.parse(playlist);
-                    console.log("OBJ: " + playlist_obj);
-                    artist_map.set(playlist_obj.artist_id,playlist_obj.id);
-                }
-        });
-    }*/
+                    let fetchPromise = fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks`, {
+                        method: 'POST',
+                        headers: { 'Authorization' : 'Bearer ' + token},
+                        body: JSON.stringify({"uris" : track_uris})
+                    });
 
-     //gets all of a user's liked tracks
-  /*   async function getLikedTracks(){
-        while(offset < total_songs) {
-            let fetchPromise = fetch(`https://api.spotify.com/v1/me/tracks?limit=${limit}&offset=${offset}`, {
-                method: 'GET',
-                headers: { 'Authorization' : 'Bearer ' + token}
-            });
-
-            await fetchPromise
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => createArtistMap(data))
-                .catch(error => {
-                    console.error(`Could not get liked_songs: ${error}`);
-                });
-                offset+=50;
-        }
-    }
-
-
-    //Creates map of form artist: ["track1_uri,track2_uri,..."]
-    function createArtistMap(data) {
-        for(let i = 0; i < data.items.length; i++) {
-            let current_track = data.items[i].track;
-            for(let artist of current_track.artists) {
-                if(artist_map.has(artist.id)) {
-                    let new_tracklist = [];
-                    new_tracklist.push(current_track.uri);
-                    artist_map.set(artist.name,new_tracklist);
-                } else {
-                    let exisiting_tracklist = artist_map.get(artist.name);
-                    exisiting_tracklist.push(current_track.uri);
-                    artist_map.set(artist.name,exisiting_tracklist);
+                    await fetchPromise
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error: ${response} ` );
+                        }
+                        return response.json();
+                    })
+                    .catch(error => {
+                        console.error(`Could not add songs to playlist: ${error}`);
+                    });
                 }
             }
-        }
-        console.log("total: " + data.total);
-        total_songs = data.total;
+            resolve();
+        });
     }
-
-
-    async function updatePlaylists(songs){
-        const playlists = await User.where('id').equals(callbackRouter.user_id).select("playlists");
-        for(playlist of playlists) {      
-            let fetchPromise = fetch(`https://api.spotify.com/v1/playlists/${playlist}/tracks`, {
-                    method: 'POST',
-                    headers: { 'Authorization' : 'Bearer ' + token},
-                    body: JSON.stringify({"uris" : value})
-                });
-
-                await fetchPromise
-                .then(response => {
-                    if (!response.ok) {
-                        console.log(response);
-                        throw new Error(`HTTP error: ${response} ` );
-                    }
-                    return response.json();
-                })
-                .then(data => console.log("success"))
-                .catch(error => {
-                    console.error(`Could not add songs to playlist: ${error}`);
-                });
-        }
-    }*/
-
 });
+
 module.exports = router;
