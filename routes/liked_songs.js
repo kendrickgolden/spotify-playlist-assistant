@@ -7,7 +7,10 @@ const User = require('../models/user');
 router.get('/',function(req, res, next) {
     const token = callbackRouter.token;
     const user_id = callbackRouter.user_id;
-    const minValue = 50;
+    const paramArtistsBool = false;
+    const paramMinValBool = true;
+    const paramMinVal = 50;
+    let paramArtists = ['5L15t6I0PQS9SBXbiklPEN','00msLVGU9crX0EC5McCiCa','3gBZUcNeVumkeeJ19CY2sX'];
     var artist_map = new Map();
 
     likedSongsMain();
@@ -16,6 +19,7 @@ router.get('/',function(req, res, next) {
     async function likedSongsMain(){
         await getLikedTracks();
         await create_playlists();
+        //console.log("done");
     }
 
     //gets all of a user's liked tracks
@@ -54,17 +58,18 @@ router.get('/',function(req, res, next) {
         for(var i = 0; i < songs.items.length; i++) {
             var current_track = songs.items[i].track;
             for(var artist of current_track.artists) {
-                if(!artist_map.has(artist.id)) {
-                    var map_value = {
-                        artist_name: artist.name,
-                        tracklist: []
-                    };
-                    map_value.tracklist.push(current_track.uri);
-                    artist_map.set(artist.id,map_value);
-                } else {
-                    var map_value = artist_map.get(artist.id);
-                    map_value.tracklist.push(current_track.uri);
-                    //artist_map.set(artist.name,exisiting_tracklist);
+                if((paramArtistsBool && paramArtists.includes(artist.id)) || (paramMinValBool)){
+                    if(!artist_map.has(artist.id)) {
+                        var map_value = {
+                            artist_name: artist.name,
+                            tracklist: []
+                        };
+                        map_value.tracklist.push(current_track.uri);
+                        artist_map.set(artist.id,map_value);
+                    } else {
+                        var map_value = artist_map.get(artist.id);
+                        map_value.tracklist.push(current_track.uri);
+                    }
                 }
             }
         }
@@ -75,7 +80,8 @@ router.get('/',function(req, res, next) {
     async function create_playlists(){
         for(var [artist_id, value] of artist_map.entries()) {
             var tracklist = value.tracklist;
-            if(tracklist.length >= minValue) {        
+            //if(tracklist.length >= paramMinValue) {    
+            if((paramMinValBool && tracklist.length >= paramMinVal) || (paramArtistsBool)) {    
                 var fetchPromise = fetch(`https://api.spotify.com/v1/users/${user_id}/playlists`, {
                     method: 'POST',
                     headers: { 'Authorization' : 'Bearer ' + token},
@@ -129,31 +135,7 @@ router.get('/',function(req, res, next) {
         }
     }
 
-    //populate artist playlist with songs
- /*   async function addSongs(playlist, artist_id, tracklist) {
-        return new Promise(async resolve =>  {
-            var fetchPromise = fetch(`https://api.spotify.com/v1/playlists/${playlist.id}/tracks`, {
-                        method: 'POST',
-                        headers: { 'Authorization' : 'Bearer ' + token},
-                        body: JSON.stringify({"uris" : tracklist})
-                    });
-
-            await fetchPromise
-                .then(response => {
-                    if (!response.ok) {
-                        console.log(response);
-                        throw new Error(`HTTP error: ${response} ` );
-                    }
-                    return response.json();
-                })
-                .then(data => updateDatabase(playlist, artist_id))
-                .catch(error => {
-                    console.error(`Could not add songs to playlist: ${error}`);
-                });
-            resolve();
-        });
-    }*/
-
+    //TODO: Prevent adding to database twice for playlists with >100 songs
     async function updateDatabase(playlist, artist_id) {
         const user = await User.findOne({id : callbackRouter.user_id});
         var playlist ={
