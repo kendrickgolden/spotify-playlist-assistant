@@ -119,28 +119,32 @@ router.get('/',function(req, res, next) {
         return new Promise(async resolve =>  {
             for(value of artist_map.values()){
                 if(!value.new_tracks.length==0) {
-                    console.log("a");
                     let playlist_id = value.playlist_id;
                     let track_uris = value.new_tracks.map(x => "spotify:track:" + x);
-                    console.log(track_uris);
-                    console.log(typeof track_uris);
-
-                    let fetchPromise = fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks`, {
-                        method: 'POST',
-                        headers: { 'Authorization' : 'Bearer ' + token},
-                        body: JSON.stringify({"uris" : track_uris})
-                    });
-
-                    await fetchPromise
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error(`HTTP error: ${response} ` );
+                    let track_uris_segment = [];
+                    while(track_uris.length != 0){
+                        if(track_uris.length < 100) {
+                            track_uris_segment = track_uris.splice(0,track_uris.length);
+                        } else {
+                            track_uris_segment = track_uris.splice(0,100);
                         }
-                        return response.json();
-                    })
-                    .catch(error => {
-                        console.error(`Could not add songs to playlist: ${error}`);
-                    });
+                        let fetchPromise = fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks?position=0`, {
+                            method: 'POST',
+                            headers: { 'Authorization' : 'Bearer ' + token},
+                            body: JSON.stringify({"uris" : track_uris_segment})
+                        });
+    
+                        await fetchPromise
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(`HTTP error: ${response} ` );
+                            }
+                            return response.json();
+                        })
+                        .catch(error => {
+                            console.error(`Could not add songs to playlist: ${error}`);
+                        });
+                    }
                 }
             }
             resolve();

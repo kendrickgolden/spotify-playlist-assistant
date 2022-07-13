@@ -91,7 +91,7 @@ router.get('/',function(req, res, next) {
                         }
                         return response.json();
                     })
-                    .then(data => addSongsWrapper(data, artist_id, tracklist))
+                    .then(data => addSongs(data, artist_id, tracklist))
                     .catch(error => {
                         console.error(`Could not create artist playlists: ${error}`);
                     });
@@ -99,7 +99,8 @@ router.get('/',function(req, res, next) {
         }
     }
 
-    async function addSongsWrapper(playlist, artist_id, tracklist){
+    //populate artist playlist with songs
+    async function addSongs(playlist, artist_id, tracklist){
         let tracklist_segment = [];
         while(tracklist.length != 0){
             if(tracklist.length < 100) {
@@ -107,12 +108,29 @@ router.get('/',function(req, res, next) {
             } else {
                 tracklist_segment = tracklist.splice(0,100);
             }
-            await addSongs(playlist, artist_id, tracklist_segment);
+            var fetchPromise = fetch(`https://api.spotify.com/v1/playlists/${playlist.id}/tracks?`, {
+                        method: 'POST',
+                        headers: { 'Authorization' : 'Bearer ' + token},
+                        body: JSON.stringify({"uris" : tracklist_segment})
+                    });
+
+            await fetchPromise
+                .then(response => {
+                    if (!response.ok) {
+                        console.log(response);
+                        throw new Error(`HTTP error: ${response} ` );
+                    }
+                    return response.json();
+                })
+                .then(data => updateDatabase(playlist, artist_id))
+                .catch(error => {
+                    console.error(`Could not add songs to playlist: ${error}`);
+                });
         }
     }
 
     //populate artist playlist with songs
-    async function addSongs(playlist, artist_id, tracklist) {
+ /*   async function addSongs(playlist, artist_id, tracklist) {
         return new Promise(async resolve =>  {
             var fetchPromise = fetch(`https://api.spotify.com/v1/playlists/${playlist.id}/tracks`, {
                         method: 'POST',
@@ -134,7 +152,7 @@ router.get('/',function(req, res, next) {
                 });
             resolve();
         });
-    }
+    }*/
 
     async function updateDatabase(playlist, artist_id) {
         const user = await User.findOne({id : callbackRouter.user_id});
