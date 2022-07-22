@@ -8,7 +8,7 @@ router.get('/',function(req, res, next) {
     const token = callbackRouter.token;
     const user_id = callbackRouter.user_id;
     const paramArtistsBool = false;
-    const paramMinValBool = true;
+    const paramMinValBool = false;
     const paramMinVal = 50;
     let paramArtists = ['5L15t6I0PQS9SBXbiklPEN','00msLVGU9crX0EC5McCiCa','3gBZUcNeVumkeeJ19CY2sX'];
     var artist_map = new Map();
@@ -137,13 +137,16 @@ router.get('/',function(req, res, next) {
 
     //TODO: Prevent adding to database twice for playlists with >100 songs
     async function updateDatabase(playlist, artist_id) {
-        const user = await User.findOne({id : callbackRouter.user_id});
+        const user = await User.findOne({id : callbackRouter.user_id}); 
         var playlist ={
             id: playlist.id,
             artist_id: artist_id
         };
-        user.playlists.push(JSON.stringify(playlist));
-        await user.save();
+        playlist_string = JSON.stringify(playlist);
+        if(!user.playlists.includes(playlist_string)) {
+            user.playlists.push(JSON.stringify(playlist));
+            await user.save();
+        }
     }
     
 });
