@@ -3,7 +3,7 @@ import React from 'react'
 export default function PlaylistUpdater() {
   return (
     <div>
-        <h1>Update Playlists</h1>
+        <h2>Update Playlists</h2>
     </div>
   )
 }
