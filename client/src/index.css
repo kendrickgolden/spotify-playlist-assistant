@@ -131,7 +131,7 @@ position: relative;
     justify-content: space-around;
 }
 
-#selected-artist-box{
+#artist-list{
     position: relative;
     width:324px;
     height: 454px;
