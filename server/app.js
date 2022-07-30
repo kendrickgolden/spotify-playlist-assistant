@@ -1,20 +1,17 @@
 require('dotenv').config();
-console.log(process.env.DATABASE_URL);
 
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const bodyParser = require("body-paraser");
 
-const testAPIRouter = require("./routes/testAPI");
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const callbackRouter = require('./routes/callback');
 const loginRouter = require('./routes/login');
+const callbackRouter = require('./routes/callback');
 const lsRouter = require('./routes/liked_songs');
 const upRouter = require('./routes/update_playlists')
+const testRouter = require('./routes/test')
 
 const app = express();
 
@@ -22,7 +19,7 @@ const mongoose = require('mongoose');
 const mongoDB = process.env.DATABASE_URL;
 mongoose.connect(mongoDB);
 const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongDB connection error'));
+db.on('error', console.error.bind(console, 'MongoDB connection error'));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -40,15 +37,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
-app.use("/testAPI", testAPIRouter);
+
+
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/callback', callbackRouter.router);
 app.use('/login', loginRouter);
+app.use('/callback', callbackRouter.router);
 app.use('/liked_songs', lsRouter);
 app.use('/update_playlists', upRouter);
+app.use('/test', testRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -65,7 +61,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-
 
 module.exports = app;

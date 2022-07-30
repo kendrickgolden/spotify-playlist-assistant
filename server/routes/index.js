@@ -3,9 +3,9 @@ const router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  //res.render('index', { title: 'index' });
+  res.render('index', { title: 'index' });
   //console.log('sent list of items');
-  res.json()
+ // res.json()
 });
 
 module.exports = router;
