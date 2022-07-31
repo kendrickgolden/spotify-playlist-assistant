@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
       url: 'https://accounts.spotify.com/api/token',
       form: {
         code: code,
-        redirect_uri: "http://localhost:3000/callback/",
+        redirect_uri: "http://localhost:5000/callback/",
         grant_type: 'authorization_code',
       },
       headers: {
@@ -49,9 +49,9 @@ router.get('/', function(req, res, next) {
 
           });
   
-          res.redirect(`/#?access_token=${access_token}&refresh_token=${refresh_token}`);
+          res.redirect(`http://localhost:3000/#?access_token=${access_token}&refresh_token=${refresh_token}`);
         } else {
-          res.redirect('/#?error=invalid_token');
+          res.redirect('http://localhost:3000/#?error=invalid_token');
         }
       });
 
