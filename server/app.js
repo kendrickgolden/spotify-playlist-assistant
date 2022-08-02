@@ -7,7 +7,6 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
-const loginRouter = require('./routes/login');
 const callbackRouter = require('./routes/callback');
 const lsRouter = require('./routes/liked_songs');
 const upRouter = require('./routes/update_playlists')
@@ -40,7 +39,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', indexRouter);
-app.use('/login', loginRouter);
 app.use('/callback', callbackRouter.router);
 app.use('/liked_songs', lsRouter);
 app.use('/update_playlists', upRouter);

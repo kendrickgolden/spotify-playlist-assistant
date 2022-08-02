@@ -1,13 +1,18 @@
 import React from "react";
+import LoginHook from "./components/hooks/LoginHook";
 import LoginButton from "./components/LoginButton";
 import PlaylistCreator from "./components/PlaylistCreator";
+
+
+const params = new URLSearchParams(window.location.search);
+const code = params.get("code");
 
 function App() {
   return (
     <>
       <header>
         <h1>Spotify Playlist Assistant</h1>
-          <LoginButton />
+        {code ? LoginHook(code) : <LoginButton />}
         <hr id="header-line"></hr>
       </header>
       <div id="main-page">
