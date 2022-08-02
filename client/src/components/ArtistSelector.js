@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useContext } from "react";
 import ArtistList from "./ArtistList";
 
 export default function ArtistSelector(props) {
@@ -7,8 +7,10 @@ export default function ArtistSelector(props) {
   function createArtist(event) {
     event.preventDefault();
 
+
     const enteredArtist = artistInputRef.current.value;
 
+  
     const artistData = {name: enteredArtist};
     
     props.onClick(enteredArtist);

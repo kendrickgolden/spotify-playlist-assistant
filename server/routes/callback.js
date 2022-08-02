@@ -6,9 +6,12 @@ const mongoose = require("mongoose");
 const User = require("../models/user");
 let access_token = "";
 let refresh_token = "";
+const get_liked_songs = require("../helpers/get_liked_songs");
+
+
 
 /* Authorization code taken from Spotify API Authorization Code Flow Guide: https://github.com/spotify/web-api-auth-examples/blob/master/authorization_code/app.js*/
-router.get("/", async function (req, res) {
+router.get("/", async function (req, res, next) {
   var code = req.query.code || null;
   const redirect_uri = "http://localhost:3000/"
 
@@ -40,14 +43,15 @@ router.get("/", async function (req, res) {
       console.error(`Could not get access token: ${error}`);
     }); 
 
+    next();
    
-   
-    //res.redirect(`http://localhost:3000/#?access_token=${access_token}&refresh_token=${refresh_token}`);
-  });
+  }, get_liked_songs.get_liked_songs);
   
 
+
+
 function getTokens(body) {
-  //console.log(body);
+  console.log(body);
   access_token = body.access_token,
   refresh_token = body.refresh_token;
   //console.log(access_token);

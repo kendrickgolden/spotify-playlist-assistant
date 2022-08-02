@@ -6,6 +6,7 @@ export default function Artist(props) {
   function deleteArtist() {
     setArtistExists(false);
   }
+  
   return artistExists ? (
     <li id="artist">
       <div id="artist-pic" className="artist-grid-box">
