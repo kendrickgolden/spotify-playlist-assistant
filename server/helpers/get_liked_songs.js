@@ -52,10 +52,12 @@ async function get_liked_songs(req, res, next) {
                     tracklist: []
                 };
 
-                let map_value_client = {
+                /*let map_value_client = {
                     artist_name: artist.name,
-                    //artist_img: current_track.artists[0]
-                };
+                    artist_img: current_track.artists[0]
+                };*/
+
+                let map_value_client = artist.name;
 
                 map_value_server.tracklist.push(current_track.uri);
                 artist_map_server.set(artist.id, map_value_server);

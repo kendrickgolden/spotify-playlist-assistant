@@ -1,9 +1,6 @@
-import {createContext, useState} from 'react'
+import {createContext} from 'react'
 
-export const ArtistMapContext = createContext();
-
-export function ArtistMapProvider({children}) {
-    return(
-        <ArtistMapContext.Provider >{children}</ArtistMapContext.Provider>
-    );
-}
+export const ArtistMapContext = createContext({
+    artistMap: {},
+    setArtistMap: () => {},
+  });

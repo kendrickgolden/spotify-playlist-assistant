@@ -141,6 +141,16 @@ position: relative;
     background-color: gray;
 }
 
+#artist-search-list{
+    position: relative;
+    width:324px;
+    height: 454px;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+    background-color: gray;
+}
+
 #artist {
     position: relative;
     display: grid;

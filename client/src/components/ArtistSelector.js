@@ -1,26 +1,43 @@
-import { useRef, useContext } from "react";
-import ArtistList from "./ArtistList";
+import { useRef, useContext, useState } from "react";
+import SearchResultArtist from "./SearchResultArtist";
+import { ArtistMapContext } from "../contexts/ArtistMap";
 
 export default function ArtistSelector(props) {
   const artistInputRef = useRef();
+  const { artistMap, setArtistMap } = useContext(ArtistMapContext);
+  const [matchingArtists, setMatchingArtists] = useState([]);
 
   function createArtist(event) {
     event.preventDefault();
-
-
+    setMatchingArtists([]);
     const enteredArtist = artistInputRef.current.value;
 
-  
-    const artistData = {name: enteredArtist};
-    
-    props.onClick(enteredArtist);
+    if (enteredArtist.length > 0) {
+      for (let artist of artistMap.values()) {
+        if (
+          artist.toUpperCase().substring(0, enteredArtist.length) ===
+          enteredArtist.toUpperCase()
+        ) {
+          setMatchingArtists((prevArray) => [...prevArray, { name: artist }]);
+          //props.onClick(enteredArtist);
+        } else if (enteredArtist === "clear") {
+        }
+      }
+    }
   }
 
   return (
-    <form id="artist-selector" onSubmit={createArtist}>
-      <label htmlFor="artist-searchbar">Select Artists: </label>
-      <input type="text" id="artist-searchbar" ref={artistInputRef}></input>
-      <button>Enter</button>
-    </form>
+    <div>
+      <form id="artist-selector" onKeyUp={createArtist} onSubmit={createArtist}>
+        <label htmlFor="artist-searchbar">Select Artists: </label>
+        <input type="text" id="artist-searchbar" ref={artistInputRef}></input>
+        <button>Enter</button>
+      </form>
+      <ul id="artist-search-list">
+        {matchingArtists.map((artist) => {
+          return <SearchResultArtist name={artist.name} key={artist.name} onClick={props.onClick}/>;
+        })}
+      </ul>
+    </div>
   );
 }

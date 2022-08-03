@@ -15,7 +15,7 @@ export default function Functions() {
   const [artistList, setArtistList] = useState(TEMP_DATA);
 
   function addArtist(artist){
-    setArtistList(artistList.push({ name: artist }));
+    setArtistList((prevArray) => [...prevArray, { name: artist }]);
     console.log(artistList);
   }
 
