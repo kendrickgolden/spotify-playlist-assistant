@@ -20,8 +20,7 @@ export default function ArtistSelector(props) {
         ) {
           setMatchingArtists((prevArray) => [...prevArray, { name: artist }]);
           //props.onClick(enteredArtist);
-        } else if (enteredArtist === "clear") {
-        }
+        } 
       }
     }
   }

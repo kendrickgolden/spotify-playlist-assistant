@@ -3,16 +3,16 @@ import ArtistSelector from "./ArtistSelector";
 import { useState } from "react";
 
 //TEMP DATA:
-const TEMP_DATA = [
+/*const TEMP_DATA = [
   { name: "Tyler, the Creator" },
   { name: "Lil Uzi Vert" },
   { name: "Kanye West" },
   { name: "Playboi Carti" },
   { name: "Juice WRLD" },
-];
+];*/
 
 export default function Functions() {
-  const [artistList, setArtistList] = useState(TEMP_DATA);
+  const [artistList, setArtistList] = useState([]);
 
   function addArtist(artist){
     setArtistList((prevArray) => [...prevArray, { name: artist }]);
@@ -26,7 +26,7 @@ export default function Functions() {
       </div>
       <div id="create-playlists-flex">
         <ArtistSelector onClick={addArtist}/>
-        <ArtistList artists={TEMP_DATA} />
+        <ArtistList artists={artistList} />
       </div>
     </div>
   );

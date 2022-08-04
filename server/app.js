@@ -11,7 +11,7 @@ const callbackRouter = require('./routes/callback');
 const lsRouter = require('./routes/liked_songs');
 const upRouter = require('./routes/update_playlists')
 const testRouter = require('./routes/test')
-
+const createFromArtistRouter = require('./routes/playlists/create/from_artists');
 const app = express();
 
 const mongoose = require('mongoose');
@@ -43,6 +43,7 @@ app.use('/callback', callbackRouter.router);
 app.use('/liked_songs', lsRouter);
 app.use('/update_playlists', upRouter);
 app.use('/test', testRouter);
+app.use('/playlists/create/from_artists', createFromArtistRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
