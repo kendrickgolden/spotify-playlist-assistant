@@ -13,13 +13,14 @@ export default function ArtistSelector(props) {
     const enteredArtist = artistInputRef.current.value;
 
     if (enteredArtist.length > 0) {
-      for (let artist of artistMap.values()) {
+      for (let [id, name] of artistMap.entries()) {
         if (
-          artist.toUpperCase().substring(0, enteredArtist.length) ===
+          name.toUpperCase().substring(0, enteredArtist.length) ===
           enteredArtist.toUpperCase()
         ) {
-          setMatchingArtists((prevArray) => [...prevArray, { name: artist }]);
-          //props.onClick(enteredArtist);
+         // console.log(id);
+          setMatchingArtists((prevArray) => [...prevArray, { name: name, id: id }]);
+          console.log(matchingArtists);
         } 
       }
     }
@@ -34,7 +35,7 @@ export default function ArtistSelector(props) {
       </form>
       <ul id="artist-search-list">
         {matchingArtists.map((artist) => {
-          return <SearchResultArtist name={artist.name} key={artist.name} onClick={props.onClick}/>;
+          return <SearchResultArtist name={artist.name} key={artist.id} id={artist.id} onClick={props.onClick}/>;
         })}
       </ul>
     </div>

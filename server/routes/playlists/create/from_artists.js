@@ -1,48 +1,47 @@
-var express = require('express');
-var router = express.Router();
-//const callbackRouter = require('./callback');
+const express = require('express');
+const router = express.Router();
+const callbackRouter = require('../../callback');
 const fetch = require('node-fetch');
-//const User = require('../models/user');
+const get_liked_songs = require('../../../helpers/get_liked_songs');
+const User = require('../../../models/user');
 
 //  creates playlist for each artist of user's liked songs
-router.get('/',function(req, res, next) {
+router.get('/',async function(req, res, next) {
 
-    var ar = req.query.artists || null;
-    //JSON.parse(artists);
-   // const f = ar.charAt
+    const full_artist_map = get_liked_songs.artist_map;
+    const artists = req.query.artists || null;
+    const artist_map = new Map(Array.from(full_artist_map).filter(([key, value]) => (artists.includes(key))));
+    const token = callbackRouter.token;
+    const user_id = callbackRouter.user_id;
 
-    console.log(ar);
+    console.log(artist_map);
 
-    res.send();
-   // let fitered_artist_map = artist_map.filter();
-    //FIX
-   // const artist_map = req.body;
+    res.json("test");
 
-    //const token = callbackRouter.token;
-    /*for(let [artist_id, value] of artist_map.entries()) {
+
+    for(let [artist_id, value] of artist_map.entries()) {
         let tracklist = value.tracklist;
-        //if(tracklist.length >= paramMinValue) {    
-        if((paramMinValBool && tracklist.length >= paramMinVal) || (paramArtistsBool)) {    
-            var fetchPromise = fetch(`https://api.spotify.com/v1/users/${user_id}/playlists`, {
-                method: 'POST',
-                headers: { 'Authorization' : 'Bearer ' + token},
-                body: JSON.stringify({"name" : "Artist Playlist: " + value.artist_name})
-                
-            });
+        console.log(tracklist);
+        var fetchPromise = fetch(`https://api.spotify.com/v1/users/${user_id}/playlists`, {
+            method: 'POST',
+            headers: { 'Authorization' : 'Bearer ' + token},
+            body: JSON.stringify({"name" : "Artist Playlist: " + value.artist_name})
+            
+        });
 
-            await fetchPromise
-                .then(response => {
-                    if (!response.ok) {
-                        console.log(response);
-                        throw new Error(`HTTP error: ${response} ` );
-                    }
-                    return response.json();
-                })
-                .then(data => addSongs(data, artist_id, tracklist))
-                .catch(error => {
-                    console.error(`Could not create artist playlists: ${error}`);
-                });
-        }
+        await fetchPromise
+            .then(response => {
+                if (!response.ok) {
+                    console.log(response);
+                    throw new Error(`HTTP error: ${response} ` );
+                }
+                return response.json();
+            })
+            .then(data => addSongs(data, artist_id, tracklist))
+            .catch(error => {
+                console.error(`Could not create artist playlists: ${error}`);
+            });
+        
     }
 
 
@@ -88,7 +87,7 @@ async function updateDatabase(playlist, artist_id) {
         user.playlists.push(JSON.stringify(playlist));
         await user.save();
     }
-}*/
+}
 
 });
 

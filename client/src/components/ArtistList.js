@@ -1,12 +1,10 @@
 import Artist from "./Artist";
 
 export default function ArtistList(props) {
-  function createPlaylists() {
-    const artists_obj = Object.fromEntries(props.artists);
-    const artists_json = JSON.stringify(artists_obj);
-    console.log(typeof artists_json);
+  function createPlaylists() {    
+    const artist_ids = JSON.stringify(props.artists.map(artist => artist.id));
     fetch(
-      `http://localhost:5000/playlists/create/from_artists?artists=hello`,
+      `http://localhost:5000/playlists/create/from_artists?artists=${artist_ids}`,
       {
         method: "GET",
       }
@@ -15,9 +13,9 @@ export default function ArtistList(props) {
         if (!response.ok) {
           throw new Error(`HTTP error: ${response.status}`);
         }
-        console.log(response);
         return response.json();
       })
+      .then((data) => console.log(data))
       .catch((error) => {
         console.error(`Could not create playlists: ${error}`);
       });

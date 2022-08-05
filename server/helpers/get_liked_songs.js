@@ -35,8 +35,9 @@ async function get_liked_songs(req, res, next) {
         resolve();
         const artist_map_client_obj = Object.fromEntries(artist_map_client);
         console.log(artist_map_client);
+      //  console.log(typeof artist_map_server)
         res.json(artist_map_client_obj);
-        module.exports = artist_map_server;
+        exports.artist_map = artist_map_server;
         
     });
 };

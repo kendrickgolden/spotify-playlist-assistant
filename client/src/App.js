@@ -5,18 +5,19 @@ import PlaylistCreator from "./components/PlaylistCreator";
 import { ArtistMapContext } from "./contexts/ArtistMap";
 
 const params = new URLSearchParams(window.location.search);
-const code = params.get("code");
+const params_code = params.get("code");
 
 function App() {
   const [artistMap, setArtistMap] = useState(new Map());
   const value = { artistMap, setArtistMap };
+  const [code, setCode] = useState(params_code);
 
   return (
     <>
       <ArtistMapContext.Provider value={value}>
         <header>
           <h1>Spotify Playlist Assistant</h1>
-          {code ? <LogoutButton code={code} /> : <LoginButton />}
+          {code ? <LogoutButton code={code} onClick={setCode}/> : <LoginButton />}
           <hr id="header-line"></hr>
         </header>
         <div id="main-page">

@@ -14,8 +14,8 @@ import { useState } from "react";
 export default function Functions() {
   const [artistList, setArtistList] = useState([]);
 
-  function addArtist(artist){
-    setArtistList((prevArray) => [...prevArray, { name: artist }]);
+  function addArtist(name,id){
+    setArtistList((prevArray) => [...prevArray, { name: name, id: id }]);
     console.log(artistList);
   }
 

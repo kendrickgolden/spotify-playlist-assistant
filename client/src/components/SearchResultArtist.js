@@ -1,8 +1,8 @@
 export default function SearchResultArtist(props) {
-  
   function addArtist() {
-    props.onClick(props.name);
-    }
+    props.onClick(props.name, props.id);
+  }
+
   return (
     <li id="artist" onClick={addArtist}>
       <div id="artist-pic" className="artist-grid-box">
