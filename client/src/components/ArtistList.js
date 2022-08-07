@@ -26,7 +26,7 @@ export default function ArtistList(props) {
       <ul id="artist-list">
         {/*TODO: change to artist.id*/}
         {props.artists.map((artist) => {
-          return <Artist name={artist.name} key={artist.name} />;
+          return <Artist name={artist.name} id={artist.id} key={artist.name} onClick={props.onClick}/>;
         })}
       </ul>
       <button id="create-playlist-btn" onClick={createPlaylists}>

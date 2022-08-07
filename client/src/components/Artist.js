@@ -4,7 +4,7 @@ export default function Artist(props) {
   const [artistExists, setArtistExists] = useState(true);
 
   function deleteArtist() {
-    setArtistExists(false);
+    props.onClick(props.id);
   }
   
   return artistExists ? (

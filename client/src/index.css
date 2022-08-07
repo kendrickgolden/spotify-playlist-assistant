@@ -136,6 +136,8 @@ header h1 {
     border-color: black;
     border-width: 2px;
     background-color: gray;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 #create-playlist-btn {
@@ -150,6 +152,7 @@ header h1 {
 }
 
 #artist-search-list {
+    display: block;
     position: relative;
     width: 324px;
     height: 454px;
@@ -157,6 +160,8 @@ header h1 {
     border-color: black;
     border-width: 2px;
     background-color: gray;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 #artist {
@@ -173,6 +178,7 @@ header h1 {
     border-width: 2px;
     padding: 10px;
     top: 0%;
+    padding-right: 20px;
 }
 
 #artist-pic {

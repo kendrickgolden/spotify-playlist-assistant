@@ -14,8 +14,22 @@ import { useState } from "react";
 export default function Functions() {
   const [artistList, setArtistList] = useState([]);
 
-  function addArtist(name,id){
-    setArtistList((prevArray) => [...prevArray, { name: name, id: id }]);
+  function addArtist(name, id) {
+
+    function containsArtists(artist) {
+      if (artist.id === id) {
+        return true;
+      }
+    }
+    console.log(artistList);
+    if (!artistList.some(containsArtists)) {
+      setArtistList((prevArray) => [...prevArray, { name: name, id: id }]);
+    }
+  }
+
+  function removeArtist(id) {
+    setArtistList((prevArray) => prevArray.filter(artist => artist.id !== id));
+    console.log(id);
     console.log(artistList);
   }
 
@@ -25,8 +39,8 @@ export default function Functions() {
         <h2>Create Playlists</h2>
       </div>
       <div id="create-playlists-flex">
-        <ArtistSelector onClick={addArtist}/>
-        <ArtistList artists={artistList} />
+        <ArtistSelector onClick={addArtist} />
+        <ArtistList artists={artistList} onClick={removeArtist} />
       </div>
     </div>
   );

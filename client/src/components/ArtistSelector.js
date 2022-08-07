@@ -33,7 +33,7 @@ export default function ArtistSelector(props) {
         <input type="text" id="artist-searchbar" ref={artistInputRef}></input>
         <button>Enter</button>
       </form>
-      <ul id="artist-search-list">
+      <ul id="artist-search-list" >
         {matchingArtists.map((artist) => {
           return <SearchResultArtist name={artist.name} key={artist.id} id={artist.id} onClick={props.onClick}/>;
         })}
