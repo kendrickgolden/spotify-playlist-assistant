@@ -6,7 +6,7 @@ const get_liked_songs = require('../../../helpers/get_liked_songs');
 const User = require('../../../models/user');
 
 //  creates playlist for each artist of user's liked songs
-router.get('/',async function(req, res, next) {
+router.get('/',async function(req, res) {
 
     const full_artist_map = get_liked_songs.artist_map;
     const artists = req.query.artists || null;

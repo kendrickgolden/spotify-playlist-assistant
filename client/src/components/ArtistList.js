@@ -24,9 +24,8 @@ export default function ArtistList(props) {
   return (
     <div id="artist-list-container">
       <ul id="artist-list">
-        {/*TODO: change to artist.id*/}
         {props.artists.map((artist) => {
-          return <Artist name={artist.name} id={artist.id} key={artist.name} onClick={props.onClick}/>;
+          return <Artist key={artist.id} id={artist.id} name={artist.name}  img={artist.img} onClick={props.onClick}/>;
         })}
       </ul>
       <button id="create-playlist-btn" onClick={createPlaylists}>

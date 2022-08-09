@@ -5,6 +5,7 @@ let artist_map_server = new Map();
 let artist_map_client = new Map();
 
 async function get_liked_songs(req, res, next) {
+
     const token = callbackRouter.token;
     const user_id = callbackRouter.user_id;
     //gets all of a user's liked tracks
@@ -34,8 +35,7 @@ async function get_liked_songs(req, res, next) {
         }
         resolve();
         const artist_map_client_obj = Object.fromEntries(artist_map_client);
-        console.log(artist_map_client);
-      //  console.log(typeof artist_map_server)
+        //console.log(artist_map_client);
         res.json(artist_map_client_obj);
         exports.artist_map = artist_map_server;
         
@@ -53,12 +53,12 @@ async function get_liked_songs(req, res, next) {
                     tracklist: []
                 };
 
-                /*let map_value_client = {
-                    artist_name: artist.name,
-                    artist_img: current_track.artists[0]
-                };*/
+                let map_value_client = {
+                    name: artist.name,
+                    img: ""
+                };
 
-                let map_value_client = artist.name;
+                //let map_value_client = artist.name;
 
                 map_value_server.tracklist.push(current_track.uri);
                 artist_map_server.set(artist.id, map_value_server);
@@ -72,6 +72,69 @@ async function get_liked_songs(req, res, next) {
     return songs.total;
 }
 
+/*async function getArtistImages() {
+    const token = callbackRouter.token;
+    console.log("B");
+    for([key, value] of artist_map_client) {
+        var fetchPromise = fetch(`https://api.spotify.com/v1/artists?id=${key}`, {
+                method: 'GET',
+                headers: { 'Authorization' : 'Bearer ' + token}
+            });
+    }
+
+    await fetchPromise
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => addImage(artist_map_client,key,data))
+                .catch(error => {
+                    console.error(`Could not get artist image: ${error}`);
+                });
+}
+
+function addImage(artist_map_client,key,data) {
+    console.log("C"")
+    artist_map_client.get(key).artist_img = data.images.url;
+}*/
+/*function getArtistImages(artist_map_client){
+    return new Promise(async resolve =>  {
+       
+        artist_map_client.forEach((value, key) =>
+        
+        )
+        while(offset < total_songs) {
+            var fetchPromise = fetch(`https://api.spotify.com/v1/artists?limit=50&offset=${offset}`, {
+                method: 'GET',
+                headers: { 'Authorization' : 'Bearer ' + token}
+            });
+
+            await fetchPromise
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => createArtistMap(data))
+                .then(data => total_songs = data)
+                .then(offset+=50)
+                .catch(error => {
+                    console.error(`Could not get liked songs: ${error}`);
+                });
+        }
+        resolve();
+        const artist_map_client_obj = Object.fromEntries(artist_map_client);
+       // console.log(artist_map_client);
+        res.json(artist_map_client_obj);
+        exports.artist_map = artist_map_server;
+        
+    });
+
+
+//}*/
 exports.get_liked_songs = get_liked_songs;
 
 

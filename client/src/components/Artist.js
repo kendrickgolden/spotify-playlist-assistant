@@ -10,6 +10,7 @@ export default function Artist(props) {
   return artistExists ? (
     <li id="artist">
       <div id="artist-pic" className="artist-grid-box">
+      <img src={props.img} alt=""></img>
         {" "}
       </div>
       <div id="artist-name" className="artist-grid-box">

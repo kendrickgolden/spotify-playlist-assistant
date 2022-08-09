@@ -12,6 +12,7 @@ const lsRouter = require('./routes/liked_songs');
 const upRouter = require('./routes/update_playlists')
 const testRouter = require('./routes/test')
 const createFromArtistRouter = require('./routes/playlists/create/from_artists');
+const artistImagesRouter = require('./routes/artists/images');
 const app = express();
 
 const mongoose = require('mongoose');
@@ -44,6 +45,7 @@ app.use('/liked_songs', lsRouter);
 app.use('/update_playlists', upRouter);
 app.use('/test', testRouter);
 app.use('/playlists/create/from_artists', createFromArtistRouter);
+app.use('/artists/images', artistImagesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

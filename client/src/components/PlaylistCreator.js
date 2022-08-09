@@ -2,33 +2,24 @@ import ArtistList from "./ArtistList";
 import ArtistSelector from "./ArtistSelector";
 import { useState } from "react";
 
-//TEMP DATA:
-/*const TEMP_DATA = [
-  { name: "Tyler, the Creator" },
-  { name: "Lil Uzi Vert" },
-  { name: "Kanye West" },
-  { name: "Playboi Carti" },
-  { name: "Juice WRLD" },
-];*/
-
 export default function Functions() {
   const [artistList, setArtistList] = useState([]);
 
-  function addArtist(name, id) {
-
+  function addArtist(name, id, img) {
     function containsArtists(artist) {
       if (artist.id === id) {
         return true;
       }
     }
-    console.log(artistList);
     if (!artistList.some(containsArtists)) {
-      setArtistList((prevArray) => [...prevArray, { name: name, id: id }]);
+      setArtistList((prevArray) => [...prevArray, { name: name, id: id, img: img }]);
     }
   }
 
   function removeArtist(id) {
-    setArtistList((prevArray) => prevArray.filter(artist => artist.id !== id));
+    setArtistList((prevArray) =>
+      prevArray.filter((artist) => artist.id !== id)
+    );
     console.log(id);
     console.log(artistList);
   }

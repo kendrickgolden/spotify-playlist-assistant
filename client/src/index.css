@@ -183,11 +183,16 @@ header h1 {
 
 #artist-pic {
     position: relative;
-    height: 100%;
+    width: 100%;
     border-style: solid;
     border-color: black;
     border-width: 1px;
     grid-row: 1/3;
+}
+
+#artist-pic img{
+    width: 100%;
+    height: 100%;
 }
 
 #artist-name {
