@@ -7,16 +7,17 @@ export default function ArtistSelector(props) {
   const { artistMap, setArtistMap } = useContext(ArtistMapContext);
   const [matchingArtists, setMatchingArtists] = useState([]);
   const [tempMap, setTempMap] = useState([]);
-  //const { a, setA } = useContext([]);
 
   function updateMap(data) {
-    console.log(data);
     let tempMap = new Map(Object.entries(data));
+    let newMatchingArtist = [];
     for (let [id, img] of tempMap) {
       artistMap.get(id).img = img;
-      console.log(artistMap.get(id));
+      let name = artistMap.get(id).name;
+      newMatchingArtist.push({ name: name, id: id, img: img });
     }
-    console.log(artistMap);
+    console.log(newMatchingArtist);
+    setMatchingArtists(newMatchingArtist);
   }
 
   function createArtist(event) {
@@ -43,6 +44,7 @@ export default function ArtistSelector(props) {
       }
 
       if (count > 0) {
+        console.log(current_string);
         fetch(
           `http://localhost:5000/artists/images?artist_ids=${current_string}`,
           {
@@ -55,7 +57,6 @@ export default function ArtistSelector(props) {
             }
             return response.json();
           })
-
           .then((data) => updateMap(data))
           .catch((error) => {
             console.error(`Could not create playlists: ${error}`);

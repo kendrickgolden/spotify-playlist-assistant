@@ -6,8 +6,7 @@ export default function SearchResultArtist(props) {
   return (
     <li id="artist" onClick={addArtist}>
       <div id="artist-pic" className="artist-grid-box">
-        <img src={props.img} alt=""></img>
-        {" "}
+        {props.img === "" ? null : <img src={props.img}></img>}{" "}
       </div>
       <div id="artist-name" className="artist-grid-box">
         {props.name}{" "}

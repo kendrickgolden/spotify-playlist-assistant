@@ -1,14 +1,12 @@
 import { useContext, useEffect } from "react";
 import { ArtistMapContext } from "../../contexts/ArtistMap";
 
-//export const ArtistMapContext = createContext();
-
 export default function LoginHook(code) {
   const { artistMap, setArtistMap } = useContext(ArtistMapContext);
 
   window.history.pushState({}, null, "/");
   useEffect(() => {
-     fetch(`http://localhost:5000/callback/?code=${code}`, {
+    fetch(`http://localhost:5000/callback/?code=${code}`, {
       method: "GET",
     })
       .then((response) => {
@@ -22,8 +20,4 @@ export default function LoginHook(code) {
         console.error(`Could not get liked songs: ${error}`);
       });
   }, [code]);
-
-  //  return(
-  // <ArtistMapContext.Provider value={artistMap}>{children}</ArtistMapContext.Provider>
-  //);
 }
