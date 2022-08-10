@@ -6,17 +6,16 @@ export default function Artist(props) {
   function deleteArtist() {
     props.onClick(props.id);
   }
-  
+
   return artistExists ? (
-    <li id="artist">
-      <div id="artist-pic" className="artist-grid-box">
-      <img src={props.img} alt=""></img>
-        {" "}
+    <li className="card">
+      <div className="card-pic card-grid-box">
+        {props.img === "" || props.img === "-" ? null : (
+          <img src={props.img}></img>
+        )}{" "}
       </div>
-      <div id="artist-name" className="artist-grid-box">
-        {props.name}{" "}
-      </div>
-      <div id="artist-options" className="artist-grid-box">
+      <div className="card-name card-grid-box">{props.name} </div>
+      <div className="card-options card-grid-box">
         <button id="remove-btn" onClick={deleteArtist}>
           <div id="white-line"></div>
         </button>

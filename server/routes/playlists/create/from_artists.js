@@ -18,7 +18,7 @@ router.get('/',async function(req, res) {
 
     res.json("test");
 
-
+    //for each submitted artist create playlist
     for(let [artist_id, value] of artist_map.entries()) {
         let tracklist = value.tracklist;
         console.log(tracklist);
@@ -75,12 +75,14 @@ async function addSongs(playlist, artist_id, tracklist){
     }
 }
 
-//TODO: Prevent adding to database twice for playlists with >100 songs
+//Updates mongoDB user playlists
 async function updateDatabase(playlist, artist_id) {
+    console.log(playlist.images);
     const user = await User.findOne({id : callbackRouter.user_id}); 
     var playlist ={
         id: playlist.id,
-        artist_id: artist_id
+        artist_id: artist_id,
+        name: playlist.name,
     };
     playlist_string = JSON.stringify(playlist);
     if(!user.playlists.includes(playlist_string)) {

@@ -4,14 +4,14 @@ export default function SearchResultArtist(props) {
   }
 
   return (
-    <li id="artist" onClick={addArtist}>
-      <div id="artist-pic" className="artist-grid-box">
-        {props.img === "" ? null : <img src={props.img}></img>}{" "}
+    <li className="card" onClick={addArtist}>
+      <div className="card-pic card-grid-box">
+        {props.img === "" || props.img === "-" ? null : (
+          <img src={props.img}></img>
+        )}{" "}
       </div>
-      <div id="artist-name" className="artist-grid-box">
-        {props.name}{" "}
-      </div>
-      <div id="artist-options" className="artist-grid-box"></div>
+      <div className="card-name card-grid-box">{props.name} </div>
+      <div className="card-options card-grid-box"></div>
     </li>
   );
 }

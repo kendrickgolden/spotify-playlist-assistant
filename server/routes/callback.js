@@ -11,11 +11,11 @@ const get_playlists = require('../helpers/get_playlists')
 
 
 /* Authorization code taken from Spotify API Authorization Code Flow Guide: https://github.com/spotify/web-api-auth-examples/blob/master/authorization_code/app.js*/
-router.get("/", async function (req, res, next) {
-  var code = req.query.code || null;
+router.get("/", async function (req, res) {
+  const code = req.query.code || null;
   const redirect_uri = "http://localhost:3000/"
 
-  var fetchPromise = fetch(
+  let fetchPromise = fetch(
     `https://accounts.spotify.com/api/token/?grant_type=authorization_code&code=${code}&redirect_uri=${redirect_uri}`,
     {
       method: "POST",
@@ -43,7 +43,7 @@ router.get("/", async function (req, res, next) {
       console.error(`Could not get access token: ${error}`);
     }); 
 
-   // next();
+
     await get_liked_songs.get_liked_songs();
     await get_playlists.get_playlists();
 
@@ -51,14 +51,10 @@ router.get("/", async function (req, res, next) {
    
   });
   
-
-
-
 function getTokens(body) {
   console.log(body);
   access_token = body.access_token,
   refresh_token = body.refresh_token;
-        
   exports.token = access_token;
 
   var options = {
@@ -80,6 +76,5 @@ function getTokens(body) {
   });
 
 }
-
 
 exports.router = router;

@@ -1,12 +1,11 @@
 import { useContext, useEffect } from "react";
-import { ArtistMapContext } from "../contexts/ArtistMap";
+import { UserContext } from "../../App";
 
 export default function LoginHook(code) {
-  const { artistMap, setArtistMap } = useContext(ArtistMapContext);
+  const UserContextValues = useContext(UserContext);
+  const setArtists = UserContextValues.setArtists;
+  const setPlaylists = UserContextValues.setPlaylists;
 
-  function setUserData(data){
-
-  }
   window.history.pushState({}, null, "/");
   useEffect(() => {
     fetch(`http://localhost:5000/callback/?code=${code}`, {
@@ -18,8 +17,11 @@ export default function LoginHook(code) {
         }
         return response.json();
       })
-      .then((data) => console.log(data))
-      //.then((data) => setArtistMap(new Map(Object.entries(data.artists))))
+      .then((data) => {
+        //console.log(data.playlists);
+        setArtists(new Map(Object.entries(data.artists)));
+        setPlaylists(new Map(Object.entries(data.playlists)));
+      })
       .catch((error) => {
         console.error(`Could not get liked songs: ${error}`);
       });

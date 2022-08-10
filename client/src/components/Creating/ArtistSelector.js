@@ -1,19 +1,19 @@
 import { useRef, useContext, useState } from "react";
 import SearchResultArtist from "./SearchResultArtist";
-import { ArtistMapContext } from "../contexts/ArtistMap";
+import { UserContext } from "../../App";
 
 export default function ArtistSelector(props) {
   const artistInputRef = useRef();
-  const { artistMap, setArtistMap } = useContext(ArtistMapContext);
+  const UserContextValues = useContext(UserContext);
+  const artists = UserContextValues.artists;
   const [matchingArtists, setMatchingArtists] = useState([]);
-  const [tempMap, setTempMap] = useState([]);
 
   function updateMap(data) {
     let tempMap = new Map(Object.entries(data));
     let newMatchingArtist = [];
     for (let [id, img] of tempMap) {
-      artistMap.get(id).img = img;
-      let name = artistMap.get(id).name;
+      artists.get(id).img = img;
+      let name = artists.get(id).name;
       newMatchingArtist.push({ name: name, id: id, img: img });
     }
     console.log(newMatchingArtist);
@@ -27,7 +27,7 @@ export default function ArtistSelector(props) {
     let count = 0;
     let current_string = "";
     if (enteredArtist.length > 0) {
-      for (let [id, value] of artistMap.entries()) {
+      for (let [id, value] of artists.entries()) {
         if (
           value.name.toUpperCase().substring(0, enteredArtist.length) ===
           enteredArtist.toUpperCase()
@@ -79,7 +79,7 @@ export default function ArtistSelector(props) {
               key={artist.id}
               id={artist.id}
               name={artist.name}
-              img={artistMap.get(artist.id).img}
+              img={artists.get(artist.id).img}
               onClick={props.onClick}
             />
           );

@@ -1,21 +1,22 @@
-import { useState} from "react";
+import { createContext, useState} from "react";
 import LoginButton from "./components/LoginButton";
 import LogoutButton from "./components/LogoutButton";
 import PlaylistCreator from "./components/Creating/PlaylistCreator";
 import PlaylistUpdater from "./components/Updating/PlaylistUpdater"
-import { ArtistMapContext } from "./components/contexts/ArtistMap";
 
 const params = new URLSearchParams(window.location.search);
 const params_code = params.get("code");
+export const UserContext = createContext();
 
 function App() {
-  const [artistMap, setArtistMap] = useState(new Map());
-  const value = { artistMap, setArtistMap };
   const [code, setCode] = useState(params_code);
-
+  const [artists, setArtists] = useState(new Map());
+  const [playlists, setPlaylists] = useState([]);
+  const value = { artists, setArtists, playlists, setPlaylists };
+  
   return (
     <>
-      <ArtistMapContext.Provider value={value}>
+      <UserContext.Provider value={value}>
         <header>
           <h1>Spotify Playlist Assistant</h1>
           {code ? <LogoutButton code={code} onClick={setCode}/> : <LoginButton />}
@@ -26,9 +27,10 @@ function App() {
             <PlaylistCreator />
             <PlaylistUpdater />
           </div>
-          {console.log(artistMap)}
+          {console.log(artists)}
+          {console.log(playlists)}
         </div>
-      </ArtistMapContext.Provider>
+      </UserContext.Provider>
     </>
   );
 }

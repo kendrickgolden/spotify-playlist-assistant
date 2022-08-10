@@ -9,12 +9,12 @@ async function get_liked_songs() {
     const token = callbackRouter.token;
    
     //gets all of a user's liked tracks
-    return new Promise(async resolve =>  {
+    return new Promise(async (resolve,reject) =>  {
         let offset = 0;
         let total_songs = 1;
 
         while(offset < total_songs) {
-            console.log("A");
+          //  console.log("A");
             var fetchPromise = fetch(`https://api.spotify.com/v1/me/tracks?limit=50&offset=${offset}`, {
                 method: 'GET',
                 headers: { 'Authorization' : 'Bearer ' + token}
@@ -24,26 +24,21 @@ async function get_liked_songs() {
                 .then(response => {
                     if (!response.ok) {
                         throw new Error(`HTTP error: ${response.status}`);
-                    }
-                    return response.json();
+                    } 
+                    return response.json(); 
                 })
-                .then(data => createArtistMap(data))
-                .then(data => total_songs = data)
-                .then(offset+=50)
+                .then(data => total_songs = createArtistMap(data))
                 .catch(error => {
                     console.error(`Could not get liked songs: ${error}`);
+                    reject();
                 });
+                offset+=50;
         }
         console.log("B");
         const artist_map_client_obj = Object.fromEntries(artist_map_client);
         exports.artist_map = artist_map_server;
         exports.artist_map_client = artist_map_client_obj;
         resolve();
-        //console.log(artist_map_client);
-       // res.json(artist_map_client_obj);
-       
-        //req.artist_map = artist_map_server;
-      //  next();
     });
 };
 
@@ -63,7 +58,6 @@ async function get_liked_songs() {
                     img: ""
                 };
 
-                //let map_value_client = artist.name;
 
                 map_value_server.tracklist.push(current_track.uri);
                 artist_map_server.set(artist.id, map_value_server);

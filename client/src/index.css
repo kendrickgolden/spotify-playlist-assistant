@@ -168,8 +168,8 @@ header h1 {
     overflow-y: auto;
     overflow-x: hidden;
 }
-
-#artist {
+/*Search & Selection cards*/
+.card {
     position: relative;
     display: grid;
     grid-template-columns: 1fr 3fr;
@@ -186,7 +186,15 @@ header h1 {
     padding-right: 20px;
 }
 
-#artist-pic {
+.card-grid-box {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.card-pic {
     position: relative;
     width: 100%;
     border-style: solid;
@@ -195,17 +203,17 @@ header h1 {
     background-color: black;
 }
 
-#artist-pic img {
+.card-pic img {
     width: 100%;
     height: 100%;
     border-radius: 50%;
 }
 
-#artist-name {
+.card-name {
     text-align: center;
 }
 
-#artist-options {
+.card-options {
     position: relative;
     text-align: center;
     width: 100%;
@@ -231,10 +239,3 @@ header h1 {
     transform: translate(-50%, -50%);
 }
 
-.artist-grid-box {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
