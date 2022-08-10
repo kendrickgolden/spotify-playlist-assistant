@@ -25,11 +25,11 @@ export default function Functions() {
   }
 
   return (
-    <div id="create-playlists">
-      <div id="create-playlists-title">
+    <div className="playlist-opeartions">
+      <div className="operations-title">
         <h2>Create Playlists</h2>
       </div>
-      <div id="create-playlists-flex">
+      <div className="operations-flex">
         <ArtistSelector onClick={addArtist} />
         <ArtistList artists={artistList} onClick={removeArtist} />
       </div>

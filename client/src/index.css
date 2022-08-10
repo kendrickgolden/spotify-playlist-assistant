@@ -83,18 +83,20 @@ header h1 {
     height: 100%;
 }
 
-#playlist-operations {
+#playlist-operations-flex {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     gap: 250px;
 }
 
-#create-playlists {
+/*Playlist Creator*/
+.playlist-opeartions {
     position: relative;
+    min-height: 700px;
 }
 
-#create-playlists-title {
+.operations-title{
     position: absolute;
     left: 50%;
     transform: translate(-50%, 0%);
@@ -103,7 +105,7 @@ header h1 {
 
 }
 
-#create-playlists h2 {
+.operations-title h2 {
     position: absolute;
     left: 50%;
     transform: translate(-50%, 0%);
@@ -111,7 +113,7 @@ header h1 {
 }
 
 
-#create-playlists-flex {
+.operations-flex {
     position: absolute;
     display: flex;
     margin-top: 100px;
@@ -123,6 +125,9 @@ header h1 {
     gap: 25px;
     justify-content: space-around;
 }
+
+
+
 
 #artist-list-container {
     position: relative;
@@ -151,7 +156,7 @@ header h1 {
     margin-top: 10px;
 }
 
-#artist-search-list {
+.search-list {
     display: block;
     position: relative;
     width: 324px;

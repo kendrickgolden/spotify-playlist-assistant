@@ -67,12 +67,12 @@ export default function ArtistSelector(props) {
 
   return (
     <div>
-      <form id="artist-selector" onKeyUp={createArtist} onSubmit={createArtist}>
-        <label htmlFor="artist-searchbar">Select Artists: </label>
-        <input type="text" id="artist-searchbar" ref={artistInputRef}></input>
+      <form className="selector" onKeyUp={createArtist} onSubmit={createArtist}>
+        <label htmlFor="searchbar">Select Artists: </label>
+        <input type="text" className="searchbar" ref={artistInputRef}></input>
         <button>Enter</button>
       </form>
-      <ul id="artist-search-list">
+      <ul className="search-list">
         {matchingArtists.map((artist) => {
           return (
             <SearchResultArtist

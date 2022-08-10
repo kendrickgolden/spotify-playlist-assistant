@@ -7,7 +7,7 @@ const User = require("../models/user");
 let access_token = "";
 let refresh_token = "";
 const get_liked_songs = require("../helpers/get_liked_songs");
-
+const get_playlists = require('../helpers/get_playlists')
 
 
 /* Authorization code taken from Spotify API Authorization Code Flow Guide: https://github.com/spotify/web-api-auth-examples/blob/master/authorization_code/app.js*/
@@ -43,9 +43,13 @@ router.get("/", async function (req, res, next) {
       console.error(`Could not get access token: ${error}`);
     }); 
 
-    next();
+   // next();
+    await get_liked_songs.get_liked_songs();
+    await get_playlists.get_playlists();
+
+    res.json({artists : get_liked_songs.artist_map_client, playlists: get_playlists.playlist_obj})
    
-  }, get_liked_songs.get_liked_songs);
+  });
   
 
 
@@ -54,7 +58,6 @@ function getTokens(body) {
   console.log(body);
   access_token = body.access_token,
   refresh_token = body.refresh_token;
-  //console.log(access_token);
         
   exports.token = access_token;
 
@@ -65,15 +68,12 @@ function getTokens(body) {
   };
 
   request.get(options, function(error, response, body) {
-    //console.log(body);
     exports.user_id = body.id;
     User.findOne({ 'id' : body.id}, function(err, existing_user) {
       if (err) return handleError(err);
       if(existing_user===null){
         User.create({id: body.id, playlists : []});
-      } else {
-        // console.log("test");
-      }
+      } 
 
     });
 
@@ -81,20 +81,5 @@ function getTokens(body) {
 
 }
 
-/*function userCreate(id, playlists, cb) {
-  userdetail = { first_name: first_name, family_name: family_name };
-
-  var user = new User(userdetail);
-
-  user.save(function (err) {
-    if (err) {
-      cb(err, null);
-      return;
-    }
-    console.log("New User: " + user);
-    users.push(user);
-    cb(null, user);
-  });
-}*/
 
 exports.router = router;

@@ -1,8 +1,9 @@
 import { useState} from "react";
 import LoginButton from "./components/LoginButton";
 import LogoutButton from "./components/LogoutButton";
-import PlaylistCreator from "./components/PlaylistCreator";
-import { ArtistMapContext } from "./contexts/ArtistMap";
+import PlaylistCreator from "./components/Creating/PlaylistCreator";
+import PlaylistUpdater from "./components/Updating/PlaylistUpdater"
+import { ArtistMapContext } from "./components/contexts/ArtistMap";
 
 const params = new URLSearchParams(window.location.search);
 const params_code = params.get("code");
@@ -21,8 +22,9 @@ function App() {
           <hr id="header-line"></hr>
         </header>
         <div id="main-page">
-          <div id="playlist-operations">
+          <div id="playlist-operations-flex">
             <PlaylistCreator />
+            <PlaylistUpdater />
           </div>
           {console.log(artistMap)}
         </div>
