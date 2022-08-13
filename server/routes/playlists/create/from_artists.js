@@ -4,6 +4,7 @@ const callbackRouter = require('../../callback');
 const fetch = require('node-fetch');
 const get_liked_songs = require('../../../helpers/get_liked_songs');
 const User = require('../../../models/user');
+const Playlist = require("../../../models/playlist");
 
 //  creates playlist for each artist of user's liked songs
 router.get('/',async function(req, res) {
@@ -77,18 +78,18 @@ async function addSongs(playlist, artist_id, tracklist){
 
 //Updates mongoDB user playlists
 async function updateDatabase(playlist, artist_id) {
-    console.log(playlist.images);
     const user = await User.findOne({id : callbackRouter.user_id}); 
-    var playlist ={
-        id: playlist.id,
-        artist_id: artist_id,
-        name: playlist.name,
-    };
-    playlist_string = JSON.stringify(playlist);
-    if(!user.playlists.includes(playlist_string)) {
-        user.playlists.push(JSON.stringify(playlist));
-        await user.save();
-    }
+
+    //TODO: When creating multi-artist playlits make artist_id an array
+    const MongoPlaylist =  await Playlist.create({id: playlist.id, name: playlist.name, artist_ids: [artist_id]});
+ //  console.log(typeof MongoPlaylist);
+   //console.dir(MongoPlaylist); 
+   //console.log(MongoPlaylist._doc.id)
+
+
+    user.playlists.push(MongoPlaylist);
+    await user.save();
+
 }
 
 });

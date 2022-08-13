@@ -1,8 +1,8 @@
 import Artist from "./Artist";
 
 export default function ArtistList(props) {
-  function createPlaylists() {    
-    const artist_ids = JSON.stringify(props.artists.map(artist => artist.id));
+  function createPlaylists() {
+    const artist_ids = JSON.stringify(props.artists.map((artist) => artist.id));
     fetch(
       `http://localhost:5000/playlists/create/from_artists?artists=${artist_ids}`,
       {
@@ -22,13 +22,21 @@ export default function ArtistList(props) {
   }
 
   return (
-    <div id="artist-list-container">
-      <ul id="artist-list">
+    <div className="queue-container">
+      <ul className="queue-list">
         {props.artists.map((artist) => {
-          return <Artist key={artist.id} id={artist.id} name={artist.name}  img={artist.img} onClick={props.onClick}/>;
+          return (
+            <Artist
+              key={artist.id}
+              id={artist.id}
+              name={artist.name}
+              img={artist.img}
+              onClick={props.onClick}
+            />
+          );
         })}
       </ul>
-      <button id="create-playlist-btn" onClick={createPlaylists}>
+      <button className="playlist-btn" onClick={createPlaylists}>
         CREATE PLAYLISTS
       </button>
     </div>

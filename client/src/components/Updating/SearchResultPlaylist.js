@@ -1,6 +1,6 @@
 export default function SearchResultPlaylist(props) {
     function addPlaylist() {
-      props.onClick();
+      props.onClick(props.id, props.name, props.artist_id);
     }
   
     return (

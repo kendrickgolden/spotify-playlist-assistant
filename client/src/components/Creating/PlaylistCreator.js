@@ -1,5 +1,5 @@
-import ArtistList from "./ArtistList";
 import ArtistSelector from "./ArtistSelector";
+import ArtistList from "./ArtistList";
 import { useState } from "react";
 
 export default function Functions() {
@@ -12,7 +12,10 @@ export default function Functions() {
       }
     }
     if (!artistList.some(containsArtists)) {
-      setArtistList((prevArray) => [...prevArray, { name: name, id: id, img: img }]);
+      setArtistList((prevArray) => [
+        ...prevArray,
+        { name: name, id: id, img: img },
+      ]);
     }
   }
 

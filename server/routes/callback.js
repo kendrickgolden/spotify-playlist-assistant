@@ -63,6 +63,7 @@ function getTokens(body) {
     json: true
   };
 
+  //If user is not already in database, add them
   request.get(options, function(error, response, body) {
     exports.user_id = body.id;
     User.findOne({ 'id' : body.id}, function(err, existing_user) {

@@ -8,7 +8,7 @@ export default function PlaylistSelector(props) {
   const playlists = UserContextValues.playlists;
   const [matchingPlaylists, setMatchingPlaylists] = useState(
     Array.from(playlists).map(([key, value]) => ({
-      playlist_id: key,
+      id: key,
       artist_id: value.artist_id,
       name: value.name,
     }))
@@ -16,7 +16,7 @@ export default function PlaylistSelector(props) {
 
   console.log(
     Array.from(playlists).map(([key, value]) => ({
-      playlist_id: key,
+      id: key,
       artist_id: value.artist_id,
       name: value.name,
     }))
@@ -28,21 +28,22 @@ export default function PlaylistSelector(props) {
     const enteredPlaylist = playlistInputRef.current.value;
     if (enteredPlaylist.length === 0) {
       setMatchingPlaylists(
-        Array.from(playlists).map(([key, value]) => ({
-          playlist_id: key,
-          artist_id: value.artist_id,
+        Array.from(playlists).map(([id, value]) => ({
+          id: id,
           name: value.name,
+          artist_id: value.artist_id,
         }))
       );
     } else {
       for (let [id, value] of playlists.entries()) {
+        console.log(value.name);
         if (
-          value.toUpperCase().substring(0, enteredPlaylist.length) ===
+          value.name.toUpperCase().substring(0, enteredPlaylist.length) ===
           enteredPlaylist.toUpperCase()
         ) {
           setMatchingPlaylists((prevArray) => [
             ...prevArray,
-            { playlist_id: id, artist_id: value },
+            { id: id, name: value.name, artist_id: value.artist_id },
           ]);
         }
       }
@@ -55,6 +56,7 @@ export default function PlaylistSelector(props) {
         className="selector"
         onKeyUp={createPlaylist}
         onSubmit={createPlaylist}
+        onClick={createPlaylist}
       >
         <label htmlFor="searchbar">Select Playlists: </label>
         <input type="text" className="searchbar" ref={playlistInputRef}></input>
@@ -64,8 +66,8 @@ export default function PlaylistSelector(props) {
         {matchingPlaylists.map((playlist) => {
           return (
             <SearchResultPlaylist
-              key={playlist.playlist_id}
-              playlist_id={playlist.playlist_id}
+              key={playlist.id}
+              id={playlist.id}
               artist_id={playlist.artist_id}
               name={playlist.name}
               onClick={props.onClick}

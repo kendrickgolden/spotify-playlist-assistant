@@ -1,12 +1,11 @@
 const mongoose = require('mongoose');
 const Playlist = require('../models/playlist');
+const Schema = mongoose.Schema;
 
-var Schema = mongoose.Schema;
-
-var UserSchema = new Schema(
+const UserSchema = new Schema(
     {
         id: {type: String, required: true},
-        playlists: {type: [String], id: false},
+        playlists: {type: [Schema.Types.ObjectId], ref: 'Playlist', req: true},
         creation_date: {type: Date, required: true, immutable: true, default: () => Date.now()}
     }
 );
