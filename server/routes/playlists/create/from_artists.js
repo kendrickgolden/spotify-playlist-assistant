@@ -15,12 +15,10 @@ router.get('/',async function(req, res) {
     const artist_map = new Map(Array.from(full_artist_map).filter(([key, value]) => (artists.includes(key))));
     const token = callbackRouter.token;
     const user_id = callbackRouter.user_id;
-
-    res.json("test");
-
+    
     //for each submitted artist create playlist
     for(let [artist_id, value] of artist_map.entries()) {
-        let tracklist = value.tracklist;
+        let tracklist = value.tracklist.map(x => "spotify:track:" + x);
         var fetchPromise = fetch(`https://api.spotify.com/v1/users/${user_id}/playlists`, {
             method: 'POST',
             headers: { 'Authorization' : 'Bearer ' + token},
@@ -39,19 +37,23 @@ router.get('/',async function(req, res) {
                 }
                 return response.json();
             })
-            .then(data => playlist = data)//addSongs(data, artist_id, tracklist))
+            .then(data => playlist = data)
             .catch(error => {
                 console.error(`Could not create artist playlists: ${error}`);
             });
 
+            
+            
             await addSongs(playlist, tracklist);
             await getImage(playlist)
             .then(data => updateDatabase(playlist, artist_id, data))
             .catch(error => {
                 console.error(`Could not populate and save playlist: ${error}`);
-            });
+        });
 
     }
+
+    res.json("test");
 
 
     //populate artist playlist with songs

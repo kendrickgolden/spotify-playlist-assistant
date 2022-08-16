@@ -35,7 +35,7 @@ export default function PlaylistUpdater() {
       </div>
       <div className="operations-flex">
         <PlaylistSelector onClick={addPlaylist} />
-        <PlaylistList playlists={playlistList} onClick={removePlaylist} />
+        <PlaylistList playlists={playlistList} setPlaylists={setPlaylistList}onClick={removePlaylist} />
       </div>
     </div>
   );

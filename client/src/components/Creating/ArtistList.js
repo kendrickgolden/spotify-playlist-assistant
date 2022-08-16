@@ -1,8 +1,18 @@
 import Artist from "./Artist";
+import { useState } from "react";
 
 export default function ArtistList(props) {
+  const [loading, setLoading] = useState(false);
+
+
   function createPlaylists() {
+    if(props.artists.length === 0) {
+      return;
+    }
     const artist_ids = JSON.stringify(props.artists.map((artist) => artist.id));
+    props.setArtists([]);
+    setLoading(true);
+    
     fetch(
       `http://localhost:5000/playlists/create/from_artists?artists=${artist_ids}`,
       {
@@ -15,7 +25,7 @@ export default function ArtistList(props) {
         }
         return response.json();
       })
-      //.then((data) => console.log(data))
+      .then(() => setLoading(false))
       .catch((error) => {
         console.error(`Could not create playlists: ${error}`);
       });
@@ -37,7 +47,7 @@ export default function ArtistList(props) {
         })}
       </ul>
       <button className="playlist-btn" onClick={createPlaylists}>
-        CREATE PLAYLISTS
+        {loading ? <div className="loader"></div> : <div>CREATE PLAYLISTS</div> }
       </button>
     </div>
   );

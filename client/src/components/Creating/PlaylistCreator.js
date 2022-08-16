@@ -34,7 +34,7 @@ export default function Functions() {
       </div>
       <div className="operations-flex">
         <ArtistSelector onClick={addArtist} />
-        <ArtistList artists={artistList} onClick={removeArtist} />
+        <ArtistList artists={artistList} setArtists={setArtistList} onClick={removeArtist} />
       </div>
     </div>
   );
