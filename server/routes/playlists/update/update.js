@@ -12,10 +12,10 @@ router.get('/', async function(req, res) {
     const artist_map = get_liked_songs.artist_map;
     const req_playlists = req.query.playlists || null;
     const user_id = callbackRouter.user_id;
+    const token = callbackRouter.token;
 
     await getPlaylists(req_playlists);
-    console.log(temp_map);
-    await addNewSongs(artist_map); 
+    addNewSongs(artist_map); 
     await updatePlaylists();
     res.json("test");
 
@@ -25,14 +25,11 @@ router.get('/', async function(req, res) {
                 console.log("Could not find playlists:" + error);
                 reject();
             } else {
-                for(let playlist of data.playlists) {
-                    console.log(req_playlists);
-                    console.log(playlist);
-                    if(req_playlists.includes(playlist)) {
-                      
-                        let playlist_obj = JSON.parse(playlist);
-                        let map_value = {playlist_id: playlist_obj.id, tracklist: [], new_tracks: []};
-                        temp_map.set(playlist_obj.artist_id,map_value);
+                for(let playlist of data.playlists) {                    
+                    if(req_playlists.includes(playlist.id)) {   
+                        let map_value = {playlist_id: playlist.id, tracklist: [], new_tracks: []};
+                        //TODO: Make artist ID take full array
+                        temp_map.set(playlist.artist_ids[0],map_value);
                         await getPlaylistSongs(map_value);
                     }
                 }

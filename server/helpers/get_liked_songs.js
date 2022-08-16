@@ -59,12 +59,12 @@ async function get_liked_songs() {
                 };
 
 
-                map_value_server.tracklist.push(current_track.uri);
+                map_value_server.tracklist.push(current_track.id);
                 artist_map_server.set(artist.id, map_value_server);
                 artist_map_client.set(artist.id, map_value_client)
             } else {
                 let map_value_server = artist_map_server.get(artist.id);
-                map_value_server.tracklist.push(current_track.uri);
+                map_value_server.tracklist.push(current_track.id);
             } 
         }
     }
