@@ -36,6 +36,7 @@ async function get_liked_songs() {
         }
         const artist_map_client_obj = Object.fromEntries(artist_map_client);
         exports.artist_map = artist_map_server;
+        //console.log(artist_map_server);
         exports.artist_map_client = artist_map_client_obj;
         resolve();
     });

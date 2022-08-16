@@ -1,6 +1,6 @@
 export default function SearchResultPlaylist(props) {
     function addPlaylist() {
-      props.onClick(props.id, props.name, props.artist_id);
+      props.onClick(props.id, props.name, props.img, props.artist_id);
     }
   
     return (
@@ -10,7 +10,7 @@ export default function SearchResultPlaylist(props) {
             <img src={props.img}></img>
           )}{" "}
         </div>
-        <div className="card-name card-grid-box">{props.name} </div>
+        <div className="card-name card-grid-box">{props.name}  </div>
         <div className="card-options card-grid-box"></div>
       </li>
     );

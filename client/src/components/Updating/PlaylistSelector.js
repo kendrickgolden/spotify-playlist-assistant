@@ -10,14 +10,7 @@ export default function PlaylistSelector(props) {
     Array.from(playlists).map(([key, value]) => ({
       id: key,
       artist_id: value.artist_id,
-      name: value.name,
-    }))
-  );
-
-  console.log(
-    Array.from(playlists).map(([key, value]) => ({
-      id: key,
-      artist_id: value.artist_id,
+      img: value.img,
       name: value.name,
     }))
   );
@@ -31,19 +24,19 @@ export default function PlaylistSelector(props) {
         Array.from(playlists).map(([id, value]) => ({
           id: id,
           name: value.name,
+          img: value.img,
           artist_id: value.artist_id,
         }))
       );
     } else {
       for (let [id, value] of playlists.entries()) {
-        console.log(value.name);
         if (
           value.name.toUpperCase().substring(0, enteredPlaylist.length) ===
           enteredPlaylist.toUpperCase()
         ) {
           setMatchingPlaylists((prevArray) => [
             ...prevArray,
-            { id: id, name: value.name, artist_id: value.artist_id },
+            { id: id, name: value.name, img: value.img, artist_id: value.artist_id },
           ]);
         }
       }
@@ -70,6 +63,7 @@ export default function PlaylistSelector(props) {
               id={playlist.id}
               artist_id={playlist.artist_id}
               name={playlist.name}
+              img={playlist.img}
               onClick={props.onClick}
             />
           );

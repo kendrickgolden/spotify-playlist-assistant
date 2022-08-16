@@ -5,7 +5,7 @@ import { useState } from "react";
 export default function PlaylistUpdater() {
   const [playlistList, setPlaylistList] = useState([]);
 
-  function addPlaylist(id, name, artist_id) {
+  function addPlaylist(id, name, img, artist_id) {
     
     function containsPlaylists(playlist) {
       if (playlist.id === id) {
@@ -17,7 +17,7 @@ export default function PlaylistUpdater() {
     if (!playlistList.some(containsPlaylists)) {
       setPlaylistList((prevArray) => [
         ...prevArray,
-        { id: id, name: name, artist_id: artist_id },
+        { id: id, name: name, img: img, artist_id: artist_id },
       ]);
     }
   }

@@ -15,7 +15,7 @@ export default function ArtistList(props) {
         }
         return response.json();
       })
-      .then((data) => console.log(data))
+      //.then((data) => console.log(data))
       .catch((error) => {
         console.error(`Could not create playlists: ${error}`);
       });
