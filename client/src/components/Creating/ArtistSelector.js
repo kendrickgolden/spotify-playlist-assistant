@@ -67,19 +67,26 @@ export default function ArtistSelector(props) {
 
   return (
     <div>
-      <ul className="search-list">
-        {matchingArtists.map((artist) => {
-          return (
-            <SearchResultArtist
-              key={artist.id}
-              id={artist.id}
-              name={artist.name}
-              img={artists.get(artist.id).img}
-              onClick={props.onClick}
-            />
-          );
-        })}
-      </ul>
+      {artists.size === 0 ? (
+        <ul className="search-list">
+          <div className="loader list-loader"></div>
+        </ul>
+      ) : (
+        <ul className="search-list">
+          {matchingArtists.map((artist) => {
+            return (
+              <SearchResultArtist
+                key={artist.id}
+                id={artist.id}
+                name={artist.name}
+                img={artists.get(artist.id).img}
+                onClick={props.onClick}
+              />
+            );
+          })}
+        </ul>
+      )}
+
       <form className="selector" onKeyUp={createArtist} onSubmit={createArtist}>
         <label htmlFor="searchbar">Select Artists: </label>
         <div className="searchbar-container">

@@ -1,14 +1,18 @@
-import LoginHook from './hooks/LoginHook';
+import LoginHook from "./hooks/LoginHook";
+import { Link } from "react-router-dom";
 
 export default function LogoutButton(props) {
-    LoginHook(props.code);
-    function logout() {
-      props.onClick(null);
-    }
+  LoginHook(props.code);
+
+  function logout() {
+    props.onClick(null);
+  }
 
   return (
-    <button onClick={logout}>
-    <div id="sign-IO-btn">Logout</div>
-  </button>
-  )
+    <Link to="/">
+
+        <div id="sign-IO-btn" onClick={logout}>Logout</div>
+
+    </Link>
+  );
 }

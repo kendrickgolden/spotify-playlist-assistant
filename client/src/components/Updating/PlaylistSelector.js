@@ -50,20 +50,27 @@ export default function PlaylistSelector(props) {
 
   return (
     <div>
-      <ul className="search-list">
-        {matchingPlaylists.map((playlist) => {
-          return (
-            <SearchResultPlaylist
-              key={playlist.id}
-              id={playlist.id}
-              artist_id={playlist.artist_id}
-              name={playlist.name}
-              img={playlist.img}
-              onClick={props.onClick}
-            />
-          );
-        })}
-      </ul>
+      {console.log(playlists.size)}
+      {playlists.size === 0 ? (
+        <ul className="search-list">
+          <div className="loader list-loader"></div>
+        </ul>
+      ) : (
+        <ul className="search-list">
+          {matchingPlaylists.map((playlist) => {
+            return (
+              <SearchResultPlaylist
+                key={playlist.id}
+                id={playlist.id}
+                artist_id={playlist.artist_id}
+                name={playlist.name}
+                img={playlist.img}
+                onClick={props.onClick}
+              />
+            );
+          })}
+        </ul>
+      )}
       <form
         className="selector"
         onKeyUp={createPlaylist}

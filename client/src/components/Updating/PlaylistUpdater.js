@@ -6,7 +6,6 @@ export default function PlaylistUpdater() {
   const [playlistList, setPlaylistList] = useState([]);
 
   function addPlaylist(id, name, img, artist_id) {
-    
     function containsPlaylists(playlist) {
       if (playlist.id === id) {
         console.log(id);
@@ -30,12 +29,13 @@ export default function PlaylistUpdater() {
 
   return (
     <div className="playlist-operations">
-      <div className="operations-title">
-        <h2>Update Playlists</h2>
-      </div>
       <div className="operations-flex">
         <PlaylistSelector onClick={addPlaylist} />
-        <PlaylistList playlists={playlistList} setPlaylists={setPlaylistList}onClick={removePlaylist} />
+        <PlaylistList
+          playlists={playlistList}
+          setPlaylists={setPlaylistList}
+          onClick={removePlaylist}
+        />
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ export default function ArtistList(props) {
     if (props.artists.length === 0) {
       return;
     }
-    
+
     const artist_ids = JSON.stringify(props.artists.map((artist) => artist.id));
     props.setArtists([]);
     setLoading(true);
@@ -46,6 +46,7 @@ export default function ArtistList(props) {
           );
         })}
       </ul>
+
       <button className="playlist-btn" onClick={createPlaylists}>
         {loading ? <div className="loader"></div> : <div>CREATE PLAYLISTS</div>}
       </button>

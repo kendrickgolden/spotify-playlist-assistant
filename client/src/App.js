@@ -5,7 +5,7 @@ import Nav from "./components/Nav";
 import PlaylistInfo from "./components/PlaylistInfo";
 import PlaylistCreator from "./components/Creating/PlaylistCreator";
 import PlaylistUpdater from "./components/Updating/PlaylistUpdater";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Link } from "react-router-dom";
 
 const params = new URLSearchParams(window.location.search);
 const params_code = params.get("code");
@@ -14,14 +14,16 @@ export const UserContext = createContext();
 function App() {
   const [code, setCode] = useState(params_code);
   const [artists, setArtists] = useState(new Map());
-  const [playlists, setPlaylists] = useState([]);
+  const [playlists, setPlaylists] = useState(new Map());
   const value = { artists, setArtists, playlists, setPlaylists };
 
   return (
     <>
       <UserContext.Provider value={value}>
         <header>
+          <Link to='/' id="home-link">
           <h1>Spotify Playlist Assistant</h1>
+          </Link>
           {code ? (
             <LogoutButton code={code} onClick={setCode} />
           ) : (

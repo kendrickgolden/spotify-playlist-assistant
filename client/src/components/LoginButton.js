@@ -11,9 +11,7 @@ export default function LoginButton() {
     <a
       href={`https://accounts.spotify.com/authorize?response_type=code&client_id=${client_id}&scope=${scope}&redirect_uri=${redirect_uri}&response_type=code&show_dialog=true`}
     >
-      <button>
         <div id="sign-IO-btn">Login</div>
-      </button>
     </a>
   );
 }
