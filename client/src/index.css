@@ -12,7 +12,7 @@
 }
 
 html {
-    background-color: whitesmoke;
+    background-color: #588157;
     scroll-behavior: smooth;
     max-width: 100%;
 }
@@ -21,6 +21,10 @@ body {
     min-height: 100vh;
 }
 
+label {
+    display: block;
+    text-align: center;
+}
 
 
 /* HEADER */
@@ -81,23 +85,98 @@ header h1 {
     padding-right: 23%;
     width: 100%;
     height: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+
+/*NAVIGATION*/
+#main-nav {
+    position: relative;
+    text-align: center;
+    background-color: #dad7cd50;
+    height: 50px;
+    font-size: 1.5em;
+    border-radius: 50px;
+    width: 60%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#main-nav nav {
+    width: 100%;
+    height: 100%;
+}
+
+#main-nav ul {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    list-style-type: none;
+}
+
+#main-val li {
+    position: relative;
+    width: 15%;
+    display: inline;
+}
+
+#main-nav a {
+    color: black;
+    text-decoration: none;
+}
+
+.playlist-si {
+    position: relative;
+    width: 90%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 50px;
+    border-color: black;
+    border-style: solid;
+    border-width: 2px;
+    text-align: center;
+    border-radius: 50px;
+    font-size: 2em;
+    color: lightgreen;
+    background-color: black;
+}
+
+.playlist-info {
+    position: relative;
+    width: 90%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 50px;
+    border-color: black;
+    border-style: solid;
+    border-width: 2px;
+    text-align: center;
+    border-radius: 50px;
+
 }
 
 #playlist-operations-flex {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    margin-top: 10px;
     gap: 250px;
+    padding: 10px;
+
+    border-radius: 50px;
 }
 
 /*Playlist Creator*/
-.playlist-opeartions {
+.playlist-operations {
     position: relative;
-    min-height: 700px;
+
 }
 
-.operations-title{
-    position: absolute;
+.operations-title {
+    position: relative;
     left: 50%;
     transform: translate(-50%, 0%);
     width: 100%;
@@ -112,11 +191,9 @@ header h1 {
 
 }
 
-
 .operations-flex {
-    position: absolute;
+    position: relative;
     display: flex;
-    margin-top: 100px;
     flex-direction: row;
     width: 100%;
     left: 50%;
@@ -127,8 +204,6 @@ header h1 {
 }
 
 
-
-
 .queue-container {
     position: relative;
 }
@@ -137,13 +212,11 @@ header h1 {
     position: relative;
     width: 324px;
     height: 454px;
-    border-style: solid;
-    border-color: black;
-    border-width: 2px;
-    background-color: gray;
+    background-color: #dad7cd50;
     overflow-y: auto;
     overflow-x: hidden;
     margin-bottom: 10px;
+    border-radius: 10px;
 }
 
 .playlist-btn {
@@ -151,16 +224,18 @@ header h1 {
     width: 300px;
     height: 50px;
     border-color: black;
-    background-color: green;
+    background-color: #A3B18A;
     left: 50%;
     transform: translateX(-50%);
+    border-style: none;
+    border-radius: 50px;
 }
 
 
 .loader {
     position: relative;
     left: 45%;
-    
+
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -168,10 +243,15 @@ header h1 {
     border-top: 3px solid white;
     animation: load 2s ease-in-out infinite;
 }
-  
-@keyframes load{
-    0% {transform: rotate(0deg)}
-    100% {transform: rotate(360deg)}
+
+@keyframes load {
+    0% {
+        transform: rotate(0deg)
+    }
+
+    100% {
+        transform: rotate(360deg)
+    }
 }
 
 .search-list {
@@ -179,13 +259,74 @@ header h1 {
     position: relative;
     width: 324px;
     height: 454px;
-    border-style: solid;
     border-color: black;
-    border-width: 2px;
-    background-color: gray;
+    border-width: 1px;
+    background-color: #dad7cd50;
     overflow-y: auto;
     overflow-x: hidden;
+    border-radius: 10px;
 }
+
+.searchbar-container {
+    position: relative;
+    border-style: solid;
+    width: 100%;
+    height: 35px;
+    border-radius: 50px;
+    border-width: 1px;
+}
+
+.selector {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.selector input {
+    position: relative;
+    border-radius: 50px;
+    height: 90%;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 15%;
+    width: 85%;
+    font-size: 1em;
+    border: none;
+    background-color: #A3B18A;
+}
+
+
+.magnifying-glass {
+    position: relative;
+    width: 35px;
+    height: 50px;
+    left: 5%;
+    top: -95%;
+    rotate: -45deg;
+}
+
+.mg-circle {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border-color: black;
+    border-width: 3px;
+    border-style: solid;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.mg-handle {
+    position: relative;
+    width: 3px;
+    height: 12px;
+    background-color: black;
+    left: 50%;
+    transform: translateX(-50%);
+
+}
+
 /*Search & Selection cards*/
 .card {
     position: relative;
@@ -256,4 +397,3 @@ header h1 {
     top: 50%;
     transform: translate(-50%, -50%);
 }
-

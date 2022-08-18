@@ -4,15 +4,15 @@ import { useState } from "react";
 export default function ArtistList(props) {
   const [loading, setLoading] = useState(false);
 
-
   function createPlaylists() {
-    if(props.artists.length === 0) {
+    if (props.artists.length === 0) {
       return;
     }
+    
     const artist_ids = JSON.stringify(props.artists.map((artist) => artist.id));
     props.setArtists([]);
     setLoading(true);
-    
+
     fetch(
       `http://localhost:5000/playlists/create/from_artists?artists=${artist_ids}`,
       {
@@ -47,7 +47,7 @@ export default function ArtistList(props) {
         })}
       </ul>
       <button className="playlist-btn" onClick={createPlaylists}>
-        {loading ? <div className="loader"></div> : <div>CREATE PLAYLISTS</div> }
+        {loading ? <div className="loader"></div> : <div>CREATE PLAYLISTS</div>}
       </button>
     </div>
   );

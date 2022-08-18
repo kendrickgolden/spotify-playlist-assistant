@@ -28,9 +28,8 @@ export default function Functions() {
   }
 
   return (
-    <div className="playlist-opeartions">
+    <div className="playlist-operations">
       <div className="operations-title">
-        <h2>Create Playlists</h2>
       </div>
       <div className="operations-flex">
         <ArtistSelector onClick={addArtist} />

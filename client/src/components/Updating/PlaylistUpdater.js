@@ -29,7 +29,7 @@ export default function PlaylistUpdater() {
   }
 
   return (
-    <div className="playlist-opeartions">
+    <div className="playlist-operations">
       <div className="operations-title">
         <h2>Update Playlists</h2>
       </div>

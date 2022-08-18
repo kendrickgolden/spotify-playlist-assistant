@@ -36,7 +36,12 @@ export default function PlaylistSelector(props) {
         ) {
           setMatchingPlaylists((prevArray) => [
             ...prevArray,
-            { id: id, name: value.name, img: value.img, artist_id: value.artist_id },
+            {
+              id: id,
+              name: value.name,
+              img: value.img,
+              artist_id: value.artist_id,
+            },
           ]);
         }
       }
@@ -45,16 +50,6 @@ export default function PlaylistSelector(props) {
 
   return (
     <div>
-      <form
-        className="selector"
-        onKeyUp={createPlaylist}
-        onSubmit={createPlaylist}
-        onClick={createPlaylist}
-      >
-        <label htmlFor="searchbar">Select Playlists: </label>
-        <input type="text" className="searchbar" ref={playlistInputRef}></input>
-        <button>Enter</button>
-      </form>
       <ul className="search-list">
         {matchingPlaylists.map((playlist) => {
           return (
@@ -69,6 +64,23 @@ export default function PlaylistSelector(props) {
           );
         })}
       </ul>
+      <form
+        className="selector"
+        onKeyUp={createPlaylist}
+        onSubmit={createPlaylist}
+      >
+        <label htmlFor="searchbar">Select Playlists: </label>
+        <div className="searchbar-container">
+          <input
+            type="text"
+            className="searchbar"
+            ref={playlistInputRef}
+          ></input>
+          <div className="magnifying-glass">
+            <div className="mg-circle"></div> <div className="mg-handle"></div>
+          </div>
+        </div>
+      </form>
     </div>
   );
 }

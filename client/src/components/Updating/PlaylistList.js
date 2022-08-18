@@ -1,11 +1,20 @@
 import Playlist from "./Playlist";
+import { useState } from "react";
 
 export default function PlaylistList(props) {
+  const [loading, setLoading] = useState(false);
+
   function updatePlaylists() {
+    if (props.playlists.length === 0) {
+      return;
+    }
+
     const playlist_ids = JSON.stringify(
       props.playlists.map((playlist) => playlist.id)
     );
     props.setPlaylists([]);
+    setLoading(true);
+
     fetch(
       `http://localhost:5000/playlists/update/update?playlists=${playlist_ids}`,
       {
@@ -18,6 +27,7 @@ export default function PlaylistList(props) {
         }
         return response.json();
       })
+      .then(() => setLoading(false))
       .catch((error) => {
         console.error(`Could not create playlists: ${error}`);
       });
@@ -40,7 +50,7 @@ export default function PlaylistList(props) {
         })}
       </ul>
       <button className="playlist-btn" onClick={updatePlaylists}>
-        UPDATE PLAYLISTS
+        {loading ? <div className="loader"></div> : <div>UPDATE PLAYLISTS</div>}
       </button>
     </div>
   );

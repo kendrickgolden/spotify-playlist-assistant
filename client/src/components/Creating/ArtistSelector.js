@@ -67,11 +67,6 @@ export default function ArtistSelector(props) {
 
   return (
     <div>
-      <form className="selector" onKeyUp={createArtist} onSubmit={createArtist}>
-        <label htmlFor="searchbar">Select Artists: </label>
-        <input type="text" className="searchbar" ref={artistInputRef}></input>
-        <button>Enter</button>
-      </form>
       <ul className="search-list">
         {matchingArtists.map((artist) => {
           return (
@@ -85,6 +80,15 @@ export default function ArtistSelector(props) {
           );
         })}
       </ul>
+      <form className="selector" onKeyUp={createArtist} onSubmit={createArtist}>
+        <label htmlFor="searchbar">Select Artists: </label>
+        <div className="searchbar-container">
+          <input type="text" className="searchbar" ref={artistInputRef}></input>
+          <div className="magnifying-glass">
+            <div className="mg-circle"></div> <div className="mg-handle"></div>
+          </div>
+        </div>
+      </form>
     </div>
   );
 }
