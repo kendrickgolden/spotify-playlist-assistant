@@ -114,7 +114,6 @@ router.get('/',async function(req, res) {
                     reject();
                     throw new Error(`HTTP error: ${response} ` );
                 }
-                console.log("B");
                 return response.json();
             })
             .then(data => resolve(data))
