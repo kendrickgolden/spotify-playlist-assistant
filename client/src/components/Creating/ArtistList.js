@@ -12,7 +12,6 @@ export default function ArtistList(props) {
     const artist_ids = JSON.stringify(props.artists.map((artist) => artist.id));
     props.setArtists([]);
     setLoading(true);
-
     fetch(
       `http://localhost:5000/playlists/create/from_artists?artists=${artist_ids}`,
       {
@@ -30,7 +29,7 @@ export default function ArtistList(props) {
         console.error(`Could not create playlists: ${error}`);
       });
   }
-
+  
   return (
     <div className="queue-container">
       <ul className="queue-list">
