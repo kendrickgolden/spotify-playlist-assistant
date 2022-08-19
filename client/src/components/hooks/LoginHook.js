@@ -10,7 +10,7 @@ export default function LoginHook(code) {
 
   window.history.pushState({}, null, "/");
   useEffect(() => {
-    fetch(`$/api/callback/?code=${code}&redirect_uri=${redirect_uri}`, {
+    fetch(`/api/callback/?code=${code}&redirect_uri=${redirect_uri}`, {
       method: "GET",
     })
       .then((response) => {
