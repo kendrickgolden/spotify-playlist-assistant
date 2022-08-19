@@ -10,9 +10,7 @@ export default function LogoutButton(props) {
 
   return (
     <Link to="/">
-
         <div id="sign-IO-btn" onClick={logout}>Logout</div>
-
     </Link>
   );
 }

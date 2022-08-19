@@ -13,7 +13,7 @@ const get_playlists = require('../helpers/get_playlists')
 /* Authorization code taken from Spotify API Authorization Code Flow Guide: https://github.com/spotify/web-api-auth-examples/blob/master/authorization_code/app.js*/
 router.get("/", async function (req, res) {
   const code = req.query.code || null;
-  const redirect_uri = "http://localhost:3000/"
+  const redirect_uri = req.query.redirect_uri || null;
 
   let fetchPromise = fetch(
     `https://accounts.spotify.com/api/token/?grant_type=authorization_code&code=${code}&redirect_uri=${redirect_uri}`,

@@ -40,8 +40,6 @@ function App() {
               <Route path="/update" element={<PlaylistUpdater />}/>
             </Routes>
           </div>
-          {console.log(artists)}
-          {console.log(playlists)}
         </div>
       </UserContext.Provider>
     </>

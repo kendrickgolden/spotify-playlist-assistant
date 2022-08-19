@@ -5,10 +5,11 @@ export default function LoginHook(code) {
   const UserContextValues = useContext(UserContext);
   const setArtists = UserContextValues.setArtists;
   const setPlaylists = UserContextValues.setPlaylists;
+  const redirect_uri = window.location;
 
   window.history.pushState({}, null, "/");
   useEffect(() => {
-    fetch(`http://localhost:5000/callback/?code=${code}`, {
+    fetch(`http://localhost:5000/callback/?code=${code}&redirect_uri=${redirect_uri}`, {
       method: "GET",
     })
       .then((response) => {
