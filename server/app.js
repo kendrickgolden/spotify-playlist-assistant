@@ -33,11 +33,11 @@ app.use(cookieParser());
 app.use(express.static(path.resolve(__dirname, "../client/build")));
 
 
-app.use('/', indexRouter);
-app.use('/callback', callbackRouter.router);
-app.use('/playlists/create/from_artists', createFromArtistRouter);
-app.use('/artists/images', artistImagesRouter);
-app.use('/playlists/update/update', updateRouter);
+app.use('/api', indexRouter);
+app.use('/api/callback', callbackRouter.router);
+app.use('/api/playlists/create/from_artists', createFromArtistRouter);
+app.use('/api/artists/images', artistImagesRouter);
+app.use('/api/playlists/update/update', updateRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
