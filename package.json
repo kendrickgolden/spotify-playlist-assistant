@@ -1,0 +1,36 @@
+{
+  "name": "spotify-project",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "cd client && npm run build",
+    "install-client": "cd client && npm install",
+    "heroku-postbuild": "npm run install-client && npm run build",
+    "server": "cd server && nodemon ./bin/www",
+    "develop": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix client\"",
+    "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix client\"",
+    "clientstart": "cd client && npm start",
+    "devserverstart": "SET DEBUG=express-locallibrary-tutorial:* | npm run serverstart"
+  },
+  "dependencies": {
+    "async": "^3.2.4",
+    "axios": "^0.27.2",
+    "body-parser": "^1.20.0",
+    "concurrently": "^7.3.0",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "dotenv": "^16.0.1",
+    "express": "~4.16.1",
+    "fetch": "^1.1.0",
+    "http-errors": "~1.6.3",
+    "mongoose": "^6.4.0",
+    "morgan": "~1.9.1",
+    "node-fetch": "^2.6.1",
+    "pug": "2.0.0-beta11",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.18.0",
+    "nodemon": "^2.0.18"
+  }
+}
