@@ -16,7 +16,7 @@ export default function PlaylistList(props) {
     setLoading(true);
 
     fetch(
-      `http://localhost:5000/playlists/update/update?playlists=${playlist_ids}`,
+      `/api/playlists/update/update?playlists=${playlist_ids}`,
       {
         method: "GET",
       }

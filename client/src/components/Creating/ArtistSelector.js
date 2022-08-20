@@ -46,7 +46,7 @@ export default function ArtistSelector(props) {
       if (count > 0) {
         console.log(current_string);
         fetch(
-          `http://localhost:5000/artists/images?artist_ids=${current_string}`,
+          `/api/artists/images?artist_ids=${current_string}`,
           {
             method: "GET",
           }

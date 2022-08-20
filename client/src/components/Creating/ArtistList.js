@@ -13,7 +13,7 @@ export default function ArtistList(props) {
     props.setArtists([]);
     setLoading(true);
     fetch(
-      `http://localhost:5000/playlists/create/from_artists?artists=${artist_ids}`,
+      `/api/playlists/create/from_artists?artists=${artist_ids}`,
       {
         method: "GET",
       }

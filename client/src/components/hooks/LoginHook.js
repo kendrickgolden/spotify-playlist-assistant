@@ -6,7 +6,6 @@ export default function LoginHook(code) {
   const setArtists = UserContextValues.setArtists;
   const setPlaylists = UserContextValues.setPlaylists;
   const redirect_uri = window.location;
-  const path = new URL('/callback', window.location.href);
 
   window.history.pushState({}, null, "/");
   useEffect(() => {
