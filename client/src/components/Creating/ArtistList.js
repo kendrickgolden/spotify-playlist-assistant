@@ -5,9 +5,12 @@ export default function ArtistList(props) {
   const [loading, setLoading] = useState(false);
 
   function createPlaylists() {
+    //console.log(type);
+    console.log(props.artists.length);
     if (props.artists.length === 0) {
       return;
     }
+
 
     const artist_ids = JSON.stringify(props.artists.map((artist) => artist.id));
     props.setArtists([]);
@@ -46,9 +49,10 @@ export default function ArtistList(props) {
         })}
       </ul>
 
-      <button className="playlist-btn" onClick={createPlaylists}>
+      <button type='button' className="playlist-btn" onClick={createPlaylists}>
         {loading ? <div className="loader"></div> : <div>CREATE PLAYLISTS</div>}
       </button>
+
     </div>
   );
 }

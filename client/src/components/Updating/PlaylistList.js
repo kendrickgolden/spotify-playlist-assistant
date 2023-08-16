@@ -5,6 +5,8 @@ export default function PlaylistList(props) {
   const [loading, setLoading] = useState(false);
 
   function updatePlaylists() {
+    //console.log(props.playlists.length);
+
     if (props.playlists.length === 0) {
       return;
     }
