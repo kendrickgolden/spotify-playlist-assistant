@@ -66,13 +66,13 @@ export default function ArtistSelector(props) {
   }
 
   return (
-    <div>
+    <div className='queue-container'>
       {artists.size === 0 ? (
-        <ul className="search-list">
+        <ul className="result-list">
           <div className="loader list-loader"></div>
-        </ul>
+      </ul>
       ) : (
-        <ul className="search-list">
+        <ul className="result-list">     
           {matchingArtists.map((artist) => {
             return (
               <SearchResultArtist
@@ -86,7 +86,6 @@ export default function ArtistSelector(props) {
           })}
         </ul>
       )}
-
       <form className="selector" onKeyUp={createArtist} onSubmit={createArtist}>
         <label htmlFor="searchbar">Select Artists: </label>
         <div className="searchbar-container">

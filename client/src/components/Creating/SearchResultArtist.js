@@ -5,13 +5,12 @@ export default function SearchResultArtist(props) {
 
   return (
     <li className="card" onClick={addArtist}>
-      <div className="card-pic card-grid-box">
+      <div className="card-pic">
         {props.img === "" || props.img === "-" ? null : (
-          <img src={props.img}></img>
+          <img src={props.img} alt="artist profile pic"></img>
         )}{" "}
       </div>
-      <div className="card-name card-grid-box">{props.name} </div>
-      <div className="card-options card-grid-box"></div>
+      <div className="card-name">{props.name} </div>
     </li>
   );
 }

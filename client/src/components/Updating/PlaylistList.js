@@ -38,7 +38,7 @@ export default function PlaylistList(props) {
   return (
     <div className="queue-container">
       {console.log(props.playlists)}
-      <ul className="queue-list">
+      <ul className="result-list">
         {props.playlists.map((playlist) => {
           return (
             <Playlist
@@ -54,6 +54,7 @@ export default function PlaylistList(props) {
       <button className="playlist-btn" onClick={updatePlaylists}>
         {loading ? <div className="loader"></div> : <div>UPDATE PLAYLISTS</div>}
       </button>
+      
     </div>
   );
 }

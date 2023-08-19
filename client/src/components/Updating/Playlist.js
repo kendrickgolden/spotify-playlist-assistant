@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 export default function Playlist(props) {
-  const [playlistExists, setPlaylistExists] = useState(true);
+  const [playlistExists, ] = useState(true);
 
   function deletePlaylist() {
     props.onClick(props.id);
@@ -9,17 +9,14 @@ export default function Playlist(props) {
 
   return playlistExists ? (
     <li className="card">
-      <div className="card-pic card-grid-box">
+      <div className="card-pic">
       {props.img === "" || props.img === "-" ? null : (
-            <img src={props.img}></img>
+            <img src={props.img} alt="playlist"></img>
           )}{" "}
       </div>
-      <div className="card-name card-grid-box">{props.name} </div>
-      <div className="card-options card-grid-box">
+      <div className="card-name">{props.name} </div>
         <button id="remove-btn" onClick={deletePlaylist}>
-          <div id="white-line"></div>
         </button>
-      </div>
     </li>
   ) : null;
 }

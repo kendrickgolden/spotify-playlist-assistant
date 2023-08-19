@@ -33,13 +33,11 @@ function App() {
         </header>
         <div id="main-page">
           {code ? <Nav/> : <div className='playlist-si'><p>Sign-In to access playlist features</p></div>}
-          <div id="playlist-operations-flex">
             <Routes>
               <Route path="/" element={<PlaylistInfo/>}/>
               <Route path="/create" element={<PlaylistCreator />}/>
               <Route path="/update" element={<PlaylistUpdater />}/>
-            </Routes>
-          </div>
+            </Routes>  
         </div>
       </UserContext.Provider>
     </>

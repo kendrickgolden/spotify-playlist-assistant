@@ -49,14 +49,14 @@ export default function PlaylistSelector(props) {
   }
 
   return (
-    <div>
+    <div className="queue-container">
       {console.log(playlists.size)}
       {playlists.size === 0 ? (
-        <ul className="search-list">
+        <ul className="result-list">
           <div className="loader list-loader"></div>
         </ul>
       ) : (
-        <ul className="search-list">
+        <ul className="result-list">
           {matchingPlaylists.map((playlist) => {
             return (
               <SearchResultPlaylist

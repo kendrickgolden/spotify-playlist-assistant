@@ -35,7 +35,7 @@ export default function ArtistList(props) {
   
   return (
     <div className="queue-container">
-      <ul className="queue-list">
+      <ul className="result-list">
         {props.artists.map((artist) => {
           return (
             <Artist
@@ -47,12 +47,10 @@ export default function ArtistList(props) {
             />
           );
         })}
-      </ul>
-
+      </ul> 
       <button type='button' className="playlist-btn" onClick={createPlaylists}>
         {loading ? <div className="loader"></div> : <div>CREATE PLAYLISTS</div>}
       </button>
-
     </div>
   );
 }
