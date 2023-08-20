@@ -31,8 +31,10 @@ function App() {
           )}
           <hr id="header-line"></hr>
         </header>
-        <div id="main-page">
+        <div id='sidebar'>
           {code ? <Nav/> : <div className='playlist-si'><p>Sign-In to access playlist features</p></div>}
+        </div>
+        <div id="main-page">
             <Routes>
               <Route path="/" element={<PlaylistInfo/>}/>
               <Route path="/create" element={<PlaylistCreator />}/>

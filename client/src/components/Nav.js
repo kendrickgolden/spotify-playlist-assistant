@@ -2,14 +2,12 @@ import { Link, useMatch, useResolvedPath } from "react-router-dom";
 
 export default function Nav() {
   return (
-    <div id="main-nav">
-      <nav>
+      <nav id="main-nav">
         <ul>
           <LinkWrapper to="/create">Create Playlists</LinkWrapper>
           <LinkWrapper to="/update">Update Playlists</LinkWrapper>
         </ul>
       </nav>
-    </div>
   );
 }
 

@@ -29,14 +29,12 @@ export default function PlaylistUpdater() {
 
   return (
     <div className="playlist-operations">
-      <div className="operations-flex">
-        <PlaylistSelector onClick={addPlaylist} />
-        <PlaylistList
-          playlists={playlistList}
-          setPlaylists={setPlaylistList}
-          onClick={removePlaylist}
-        />
-      </div>
+      <PlaylistSelector onClick={addPlaylist} />
+      <PlaylistList
+        playlists={playlistList}
+        setPlaylists={setPlaylistList}
+        onClick={removePlaylist}
+      />
     </div>
   );
 }

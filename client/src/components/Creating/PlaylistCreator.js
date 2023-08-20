@@ -29,14 +29,12 @@ export default function Functions() {
 
   return (
     <div className="playlist-operations">
-      <div className="operations-flex">
-        <ArtistSelector onClick={addArtist} />
-        <ArtistList
-          artists={artistList}
-          setArtists={setArtistList}
-          onClick={removeArtist}
-        />
-      </div>
+      <ArtistSelector onClick={addArtist} />
+      <ArtistList
+        artists={artistList}
+        setArtists={setArtistList}
+        onClick={removeArtist}
+      />
     </div>
   );
 }
