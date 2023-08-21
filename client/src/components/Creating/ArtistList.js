@@ -35,6 +35,9 @@ export default function ArtistList(props) {
   
   return (
     <div className="queue-container">
+      <button type='button' className="playlist-btn" onClick={createPlaylists}>
+        {loading ? <div className="loader"></div> : <div>CREATE PLAYLISTS</div>}
+      </button>
       <ul className="result-list">
         {props.artists.map((artist) => {
           return (
@@ -48,9 +51,6 @@ export default function ArtistList(props) {
           );
         })}
       </ul> 
-      <button type='button' className="playlist-btn" onClick={createPlaylists}>
-        {loading ? <div className="loader"></div> : <div>CREATE PLAYLISTS</div>}
-      </button>
     </div>
   );
 }

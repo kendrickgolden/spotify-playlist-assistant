@@ -1,9 +1,9 @@
-import { useRef, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../../App";
 import SearchResultPlaylist from "./SearchResultPlaylist";
+import SearchBar from "../Creating/Playlist Modification Tools/SearchBar";
 
 export default function PlaylistSelector(props) {
-  const playlistInputRef = useRef();
   const UserContextValues = useContext(UserContext);
   const playlists = UserContextValues.playlists;
   const [matchingPlaylists, setMatchingPlaylists] = useState(
@@ -15,42 +15,14 @@ export default function PlaylistSelector(props) {
     }))
   );
 
-  function createPlaylist(event) {
-    event.preventDefault();
-    setMatchingPlaylists([]);
-    const enteredPlaylist = playlistInputRef.current.value;
-    if (enteredPlaylist.length === 0) {
-      setMatchingPlaylists(
-        Array.from(playlists).map(([id, value]) => ({
-          id: id,
-          name: value.name,
-          img: value.img,
-          artist_id: value.artist_id,
-        }))
-      );
-    } else {
-      for (let [id, value] of playlists.entries()) {
-        if (
-          value.name.toUpperCase().substring(0, enteredPlaylist.length) ===
-          enteredPlaylist.toUpperCase()
-        ) {
-          setMatchingPlaylists((prevArray) => [
-            ...prevArray,
-            {
-              id: id,
-              name: value.name,
-              img: value.img,
-              artist_id: value.artist_id,
-            },
-          ]);
-        }
-      }
-    }
-  }
-
   return (
     <div className="queue-container">
       {console.log(playlists.size)}
+      <SearchBar
+        setMatching={setMatchingPlaylists}
+        list={playlists}
+        category={"playlist"}
+      />
       {playlists.size === 0 ? (
         <ul className="result-list">
           <div className="loader list-loader"></div>
@@ -71,23 +43,6 @@ export default function PlaylistSelector(props) {
           })}
         </ul>
       )}
-      <form
-        className="selector"
-        onKeyUp={createPlaylist}
-        onSubmit={createPlaylist}
-      >
-        <label htmlFor="searchbar">Select Playlists: </label>
-        <div className="searchbar-container">
-          <input
-            type="text"
-            className="searchbar"
-            ref={playlistInputRef}
-          ></input>
-          <div className="magnifying-glass">
-            <div className="mg-circle"></div> <div className="mg-handle"></div>
-          </div>
-        </div>
-      </form>
     </div>
   );
 }

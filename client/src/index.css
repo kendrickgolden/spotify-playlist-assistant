@@ -101,8 +101,8 @@ header h1 {
 
 /*MAIN BODY*/
 #main-page {
-    padding-left: 15%;
-    padding-right: 15%;
+    padding-left: 10%;
+    padding-right: 10%;
 }
 
 
@@ -192,6 +192,7 @@ header h1 {
     max-height: 100%;
     width: 50%;
     flex-grow: 1;
+    padding-bottom: 20px;
 }
 
 
@@ -201,16 +202,16 @@ header h1 {
     padding: 10px;
     left: 50%;
     transform: translateX(-50%);
-    top: 0px;
+    top: 15%;
     position: absolute;
-    width: 65%;
-    height: 85%;
+    width: 90%;
+    height: 75%;
     max-height: 85%;
     overflow-y: auto;
     border-radius: 10px;
     border-style: solid;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 10px;
     color: black;
 }
@@ -224,8 +225,7 @@ header h1 {
     border-color: black;
     border-style: solid;
     border-radius: 50px;
-    margin-top: 20px;
-    bottom: 20px;
+    top: 20px;
 }
 
 
@@ -280,7 +280,7 @@ header h1 {
     height: 50px;
     width: 300px;
     margin: auto;
-    bottom: 0px;
+    top: 5%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
