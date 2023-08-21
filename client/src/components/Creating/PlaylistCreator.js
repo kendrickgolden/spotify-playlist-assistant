@@ -1,9 +1,15 @@
 import ArtistSelector from "./ArtistSelector";
 import ArtistList from "./ArtistList";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { UserContext } from "../../App";
+import CreatePlaylistBtn from "./Playlist Modification Tools/CreatePlaylistBtn";
+import SearchBar from "./Playlist Modification Tools/SearchBar";
 
 export default function Functions() {
+  const UserContextValues = useContext(UserContext);
   const [artistList, setArtistList] = useState([]);
+  const [matchingArtists, setMatchingArtists] = useState([]);
+  const artists = UserContextValues.artists;
 
   function addArtist(name, id, img) {
     function containsArtists(artist) {
@@ -29,12 +35,18 @@ export default function Functions() {
 
   return (
     <div className="playlist-operations">
-      <ArtistSelector onClick={addArtist} />
-      <ArtistList
+      <SearchBar
+        setMatching={setMatchingArtists}
+        list={artists}
+        category={"artist"}
+      />
+      <CreatePlaylistBtn
         artists={artistList}
         setArtists={setArtistList}
         onClick={removeArtist}
       />
+      <ArtistSelector onClick={addArtist} matchingArtists={matchingArtists} />
+      <ArtistList artists={artistList} onClick={removeArtist} />
     </div>
   );
 }

@@ -101,8 +101,10 @@ header h1 {
 
 /*MAIN BODY*/
 #main-page {
+    position: relative;
     padding-left: 10%;
     padding-right: 10%;
+    max-height: 100%;
 }
 
 
@@ -176,28 +178,48 @@ header h1 {
 
 /*Playlist Creator*/
 .playlist-operations {
+    position: relative;
     height: 100%;
+    max-height: 100%;
     width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    gap: 25px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 9fr; 
+    grid-template-areas:
+    "selector playlist-btn"
+    "selection queue";
+    padding: 20px;
 }
-
 
 .queue-container {
     position: relative;
     height: 100%;
     max-height: 100%;
-    width: 50%;
-    flex-grow: 1;
-    padding-bottom: 20px;
+}
+
+#queue {
+    grid-area: queue;
+}
+
+#selection {
+    grid-area: selection;
 }
 
 
 .result-list {
+    position: absolute;
     list-style-type: none;
+    overflow-y: auto;
+    border-radius: 10px;
+    border-style: solid;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    color: black;
+    width: 90%;
+    height: 100%;
+    max-height: 100%;
+    /*list-style-type: none;
     margin: auto;
     padding: 10px;
     left: 50%;
@@ -213,19 +235,14 @@ header h1 {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 10px;
-    color: black;
+    color: black;*/
 }
 
 .playlist-btn {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 50%;
-    height: 8%;
+    grid-area: playlist-btn;
     border-color: black;
     border-style: solid;
     border-radius: 50px;
-    top: 20px;
 }
 
 
@@ -274,15 +291,12 @@ header h1 {
 }
 
 .selector {
-    position: absolute;
+    grid-area: selector;
     display: flex;
     flex-direction: column;
     height: 50px;
     width: 300px;
     margin: auto;
-    top: 5%;
-    left: 50%;
-    transform: translate(-50%, -50%);
 }
 
 .selector input {

@@ -1,27 +1,20 @@
 import { useContext, useState } from "react";
 import SearchResultArtist from "./SearchResultArtist";
 import { UserContext } from "../../App";
-import SearchBar from "./Playlist Modification Tools/SearchBar";
 
 export default function ArtistSelector(props) {
   const UserContextValues = useContext(UserContext);
   const artists = UserContextValues.artists;
-  const [matchingArtists, setMatchingArtists] = useState([]);
 
   return (
-    <div className="queue-container">
-      <SearchBar
-        setMatching={setMatchingArtists}
-        list={artists}
-        category={"artist"}
-      />
+    <div className="queue-container" id="selection">
       {artists.size === 0 ? (
         <ul className="result-list">
           <div className="loader list-loader"></div>
         </ul>
       ) : (
         <ul className="result-list">
-          {matchingArtists.map((artist) => {
+          {props.matchingArtists.map((artist) => {
             return (
               <SearchResultArtist
                 key={artist.id}
