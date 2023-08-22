@@ -92,12 +92,12 @@ export default function SearchBar(props) {
 
   return (
     <form className="selector" onKeyUp={create} onSubmit={create}>
-      <label htmlFor="searchbar">Select {props.category}: </label>
+      <label htmlFor="searchbar">Search {props.category}s: </label>
       <div className="searchbar-container">
-        <input type="text" className="searchbar" ref={inputRef}></input>
         <div className="magnifying-glass">
           <div className="mg-circle"></div> <div className="mg-handle"></div>
         </div>
+        <input type="text" className="searchbar" ref={inputRef}></input>
       </div>
     </form>
   );

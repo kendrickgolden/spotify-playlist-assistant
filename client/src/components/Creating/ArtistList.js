@@ -4,6 +4,7 @@ export default function ArtistList(props) {
   
   return (
     <div className="queue-container" id='queue'>
+      <h2>Queue</h2>
       <ul className="result-list">
         {props.artists.map((artist) => {
           return (
