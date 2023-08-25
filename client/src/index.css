@@ -51,8 +51,12 @@ header {
     position: relative;
     height: 60px;
     text-align: center;
-    background: hsl(0 0% 5%);
-    color: white;
+    background: hsl(0 0% 98%);
+   /* border-bottom: 1px;
+    border-style: hidden hidden solid hidden;
+    border-color: hsl(0,0%,20%);*/
+    box-shadow: 0px 0px 5px hsl(0, 0%, 10%);
+    z-index: 2;
 }
 
 header h1 {
@@ -60,7 +64,7 @@ header h1 {
     left: 50%;
     transform: translateX(-50%);
     font-size: 2em;
-    color: white;
+    color: hsl(0, 0%, 10%);
 }
 
 
@@ -98,7 +102,9 @@ header h1 {
 #sidebar {
     grid-area: sidebar;
     position: relative;
-    background: hsl(0 0% 25%);
+    background: hsl(0 0% 90%);
+    box-shadow: 0px 0px 5px hsl(0, 0%, 10%);
+    z-index: 1;
 }
 
 
@@ -148,8 +154,6 @@ header h1 {
 #main-page {
     grid-area: body;
     position: relative;
-    padding-left: 10%;
-    padding-right: 10%;
     padding-top: 1%;
     background: hsl(0 0% 90%);
     padding-bottom: 5%;
@@ -191,61 +195,80 @@ header h1 {
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-columns: 2fr 1fr 3fr;
-    grid-template-rows: 1fr 9fr;
+    /*grid-template-columns: 2fr 1fr 3fr;
+    grid-template-rows: 1fr 4.5fr 4.5fr;
     grid-template-areas:
-        "selector playlist-btn queue"
-        "selection selection queue";
+        "selector selector playlist-btn"
+        "selection selection selection"
+        "queue queue queue";*/
+    grid-template-rows: 1fr 4fr 1fr 4fr;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+        "selector result-info"
+        "selection selection"
+        "playlist-btn queue-info"
+        "queue queue";
     place-items: center;
 }
 
 .queue-container {
     position: relative;
     height: 100%;
-    width: 90%;
-    margin-left: 5%;
-    margin-right: 5%;
-    background: hsl(0 0% 65%);
-    border-radius: 2.5%;
+    width: 100%;
 }
 
 #queue {
     grid-area: queue;
+    border-top: 10px;
 }
 
-#queue h2 {
-    height: 10%;
-    text-align: center;
-    vertical-align: middle;
-}
 #selection {
     grid-area: selection;
 }
 
 
 .result-list {
-    position: absolute;
     width: 100%;
     height: 100%;
-    max-height: 100%;
     list-style-type: none;
-    overflow-y: auto;
-    border-radius: 2.5%;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 10px;
+    display: flex;
+    flex-direction: row;
     color: black;
+
+}
+
+.arrow{
+    position: absolute;
+    height: 100%;
+    width: 8%;
+    background-color: hsla(0, 0%, 84%, .3);
+    z-index: 1;
+    border: none;
+}
+
+.arrow:hover {
+    background-color: hsla(0, 0%, 84%, .6);
+}
+
+#left-arrow {
+    left: 0;
+}
+
+#right-arrow {
+    right: 0;
 }
 
 .playlist-btn {
-    position: relative;
+    position: absolute;
     grid-area: playlist-btn;
-    border-radius: 50px;
+    border-radius: 5%;
     font-size: 16px;
     font-weight: bold;
-    background: hsl(0 0% 25%);
-    height: 40%;
-    width: 80%;
+    background: hsl(0 0% 98%);
+    color: hsl(0 0% 10%);
+    height: 90%;
+    width: 20%;
+    left: 0;
 }
 
 .list-loader {
@@ -276,13 +299,15 @@ header h1 {
 
 .selector {
     grid-area: selector;
-    position: relative;
+    position: absolute;
+    left: 0;
     display: grid;
     grid-template-columns: 1fr 4fr;
     height: 100%;
-    width: 100%;
+    width: 60%;
     align-items: center;
     justify-items: center;
+    
 }
 
 .searchbar-container {
@@ -336,9 +361,25 @@ header h1 {
 
 }
 
+#result-info {
+    grid-area: result-info;
+    position: absolute;
+    right: 10%;
+    top: 0;
+}
+
+#queue-info {
+    grid-area: queue-info;
+    position: absolute;
+    right: 10%;
+    z-index: 2;
+}
+
 /*Search & Selection cards*/
 .card {
     position: relative;
+    flex: 0 0 20%;
+    padding: .5rem;
 }
 
 .card-pic {

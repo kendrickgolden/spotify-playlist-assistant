@@ -1,29 +1,30 @@
 import { useRef } from "react";
 
-export default function SearchBar(props) {
+export default function SearchBar({setMatching, setArtistartistScrollCounter, list, category}) {
   const inputRef = useRef();
 
   function updateMap(data) {
     let tempMap = new Map(Object.entries(data));
     let newMatchingResults = [];
     for (let [id, img] of tempMap) {
-      props.list.get(id).img = img;
-      let name = props.list.get(id).name;
+      list.get(id).img = img;
+      let name = list.get(id).name;
       newMatchingResults.push({ name: name, id: id, img: img });
     }
     console.log(newMatchingResults);
-    props.setMatching(newMatchingResults);
+    setMatching(newMatchingResults);
   }
 
   function create(event) {
     event.preventDefault();
-    props.setMatching([]);
+    setMatching([]);
+    setArtistartistScrollCounter(0);
     const enteredTerm = inputRef.current.value;
     let count = 0;
     let current_string = "";
-    if (props.category === "artist") {
+    if (category === "artist") {
       if (enteredTerm.length > 0) {
-        for (let [id, value] of props.list.entries()) {
+        for (let [id, value] of list.entries()) {
           if (
             value.name.toUpperCase().substring(0, enteredTerm.length) ===
             enteredTerm.toUpperCase()
@@ -32,7 +33,7 @@ export default function SearchBar(props) {
               count++;
               current_string = current_string.concat(id, ",");
             }
-            props.setMatching((prevArray) => [
+            setMatching((prevArray) => [
               ...prevArray,
               { name: value.name, id: id },
             ]);
@@ -42,7 +43,7 @@ export default function SearchBar(props) {
         if (count > 0) {
           console.log(current_string);
           fetch(
-            `/api/${props.category}s/images?${props.category}_ids=${current_string}`,
+            `/api/${category}s/images?${category}_ids=${current_string}`,
             {
               method: "GET",
             }
@@ -59,10 +60,10 @@ export default function SearchBar(props) {
             });
         }
       }
-    } else if (props.category === "playlist") {
+    } else if (category === "playlist") {
       if (enteredTerm.length === 0) {
-        props.setMatching(
-          Array.from(props.list).map(([id, value]) => ({
+        setMatching(
+          Array.from(list).map(([id, value]) => ({
             id: id,
             name: value.name,
             img: value.img,
@@ -70,12 +71,12 @@ export default function SearchBar(props) {
           }))
         );
       } else {
-        for (let [id, value] of props.list.entries()) {
+        for (let [id, value] of list.entries()) {
           if (
             value.name.toUpperCase().substring(0, enteredTerm.length) ===
             enteredTerm.toUpperCase()
           ) {
-            props.setMatching((prevArray) => [
+            setMatching((prevArray) => [
               ...prevArray,
               {
                 id: id,
@@ -92,7 +93,7 @@ export default function SearchBar(props) {
 
   return (
     <form className="selector" onKeyUp={create} onSubmit={create}>
-      <label htmlFor="searchbar">Search {props.category}s: </label>
+      <label htmlFor="searchbar">Search {category}s: </label>
       <div className="searchbar-container">
         <div className="magnifying-glass">
           <div className="mg-circle"></div> <div className="mg-handle"></div>
