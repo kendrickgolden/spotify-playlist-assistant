@@ -13,13 +13,11 @@ async function get_playlists() {
                 console.log("Could not find playlists:" + error);
                 reject();
             } else {
-                //console.log(Object.entries(data.playlists));
                 let playlist_map = new Map();
                 for(const [key,value] of Object.entries(data.playlists)) {
                     playlist_map.set(value.id, {name: value.name, img: value.image, artist_ids: value.artist_ids});
                 }
 
-                console.log(playlist_map);
                 const playlist_map_obj = Object.fromEntries(playlist_map);
                 exports.playlist_obj = playlist_map_obj;
                 resolve();

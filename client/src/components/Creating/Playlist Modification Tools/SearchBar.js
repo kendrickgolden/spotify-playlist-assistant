@@ -11,7 +11,6 @@ export default function SearchBar({setMatching, setArtistartistScrollCounter, li
       let name = list.get(id).name;
       newMatchingResults.push({ name: name, id: id, img: img });
     }
-    console.log(newMatchingResults);
     setMatching(newMatchingResults);
   }
 

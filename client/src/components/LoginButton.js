@@ -8,11 +8,10 @@ export default function LoginButton() {
 
   //TODO: Implement state as query parameter
   return (
-
     <a
       href={`https://accounts.spotify.com/authorize?response_type=code&client_id=${client_id}&scope=${scope}&redirect_uri=${redirect_uri}&response_type=code&show_dialog=true`}
     >
-        <div id="sign-IO-btn">Login</div>
+      <div id="sign-IO-btn">Login</div>
     </a>
   );
 }

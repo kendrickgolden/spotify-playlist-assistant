@@ -10,15 +10,22 @@ const { response } = require('express');
 //  creates playlist for each artist of user's liked songs
 router.get('/',async function(req, res) {
 
+    //get list of artists and all their saved songs
     const full_artist_map = get_liked_songs.artist_map;
+
+    //get all requested artists
     const artists = req.query.artists || null;
+
+    //filter artist_map down to requested artists
     const artist_map = new Map(Array.from(full_artist_map).filter(([key, value]) => (artists.includes(key))));
+    console.log(artist_map);
     const token = callbackRouter.token;
     const user_id = callbackRouter.user_id;
     
     //for each submitted artist create playlist
     for(let [artist_id, value] of artist_map.entries()) {
         let tracklist = value.tracklist.map(x => "spotify:track:" + x);
+        console.log(tracklist);
         var fetchPromise = fetch(`https://api.spotify.com/v1/users/${user_id}/playlists`, {
             method: 'POST',
             headers: { 'Authorization' : 'Bearer ' + token},
@@ -27,8 +34,7 @@ router.get('/',async function(req, res) {
         });
 
         let playlist;
-
-
+        console.log("tesst1");
         await fetchPromise
             .then(response => {
                 if (!response.ok) {

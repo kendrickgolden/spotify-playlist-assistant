@@ -3,8 +3,6 @@ import Artist from "./Artist";
 export default function ArtistList({ artists, onClick, sC, setSC }) {
   return (
     <div className="queue-container" id="queue">
-      {console.log(artists.length)}
-      {console.log(sC)}
       {sC > 0 && (
         <button
           className="arrow"

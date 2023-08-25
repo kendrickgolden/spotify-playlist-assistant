@@ -22,7 +22,6 @@ export default function PlaylistUpdater() {
   function addPlaylist(id, name, img, artist_id) {
     function containsPlaylists(playlist) {
       if (playlist.id === id) {
-        console.log(id);
         return true;
       }
     }

@@ -15,6 +15,7 @@ router.get("/", async function (req, res) {
   const code = req.query.code || null;
   const redirect_uri = req.query.redirect_uri || null;
 
+  //console.log("test1");
   let fetchPromise = fetch(
     `https://accounts.spotify.com/api/token/?grant_type=authorization_code&code=${code}&redirect_uri=${redirect_uri}`,
     {
@@ -39,20 +40,23 @@ router.get("/", async function (req, res) {
       return response.json();
     })
     .then(data => getTokens(data))
+    .then(() => console.log("success"))
     .catch((error) => {
-      console.error(`Could not get access token: ${error}`);
+      console.error(`Could not get access token 123: ${error}`);
     }); 
 
 
+    //console.log("test2");
     await get_liked_songs.get_liked_songs();
+   // console.log("test3");
     await get_playlists.get_playlists();
+    //console.log("test4");
 
     res.json({artists : get_liked_songs.artist_map_client, playlists: get_playlists.playlist_obj})
    
   });
   
 function getTokens(body) {
-  console.log(body);
   access_token = body.access_token,
   refresh_token = body.refresh_token;
   exports.token = access_token;

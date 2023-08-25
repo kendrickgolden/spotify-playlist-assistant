@@ -4,14 +4,14 @@ export default function CreatePlaylistBtn(props) {
     const [loading, setLoading] = useState(false);
 
     function createPlaylists() {
-        //console.log(type);
-        console.log(props.artists.length);
+        
         if (props.artists.length === 0) {
           return;
         }
     
     
         const artist_ids = JSON.stringify(props.artists.map((artist) => artist.id));
+        console.log(artist_ids);
         props.setArtists([]);
         setLoading(true);
         fetch(
