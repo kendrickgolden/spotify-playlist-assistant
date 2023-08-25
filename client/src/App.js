@@ -21,8 +21,8 @@ function App() {
     <>
       <UserContext.Provider value={value}>
         <header>
-          <Link to='/' id="home-link">
-          <h1>Spotify Playlist Assistant</h1>
+          <Link to="/" id="home-link">
+            <h1>Spotify Playlist Assistant</h1>
           </Link>
           {code ? (
             <LogoutButton code={code} onClick={setCode} />
@@ -31,15 +31,15 @@ function App() {
           )}
           <hr id="header-line"></hr>
         </header>
-        <div id='sidebar'>
-          {code ? <Nav/> : <div className='playlist-si'><p>Sign-In to access playlist features</p></div>}
+        <div id="sidebar">
+          <Nav />
         </div>
         <div id="main-page">
-            <Routes>
-              <Route path="/" element={<PlaylistInfo/>}/>
-              <Route path="/create" element={<PlaylistCreator />}/>
-              <Route path="/update" element={<PlaylistUpdater />}/>
-            </Routes>  
+          <Routes>
+            <Route path="/" element={<PlaylistInfo />} />
+            <Route path="/create" element={<PlaylistCreator />} />
+            <Route path="/update" element={<PlaylistUpdater />} />
+          </Routes>
         </div>
       </UserContext.Provider>
     </>
