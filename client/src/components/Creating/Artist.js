@@ -9,11 +9,9 @@ export default function Artist(props) {
 
   return artistExists ? (
     <li className="card">
-      <div className="card-pic">
-        {props.img === "" || props.img === "-" ? null : (
+        {props.img === "" || props.img === "-" ? <div className="img-filler">No image available</div> : (
           <img src={props.img} alt="playlist"></img>
         )}{" "}
-      </div>
       <div className="card-name">{props.name} </div>
         <button id="remove-btn" onClick={deleteArtist}>
         </button>

@@ -19,7 +19,7 @@ export default function Functions() {
         return true;
       }
     }
-    if (!artistList.some(containsArtists)) {
+    if ((!artistList.some(containsArtists)) && img !== '') {
       setArtistList((prevArray) => [
         ...prevArray,
         { name: name, id: id, img: img },
@@ -31,7 +31,7 @@ export default function Functions() {
     setArtistList((prevArray) =>
       prevArray.filter((artist) => artist.id !== id)
     );
-    if(((artistList.length -1) % 5 === 0 ) && (playlistScrollCounter * 5 + 1 >= artistList.length) && playlistScrollCounter!=0) {
+    if(((artistList.length -1) % 5 === 0 ) && (playlistScrollCounter * 5 + 1 >= artistList.length) && playlistScrollCounter!==0) {
       setPlaylistScrollCounter(playlistScrollCounter - 1);
     }
   }

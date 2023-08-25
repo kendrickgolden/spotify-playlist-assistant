@@ -5,11 +5,9 @@ export default function SearchResultArtist(props) {
 
   return (
     <li className="card" onClick={addArtist}>
-      <div className="card-pic">
-        {props.img === "" || props.img === "-" ? null : (
-          <img src={props.img} alt="artist profile pic"></img>
+        {props.img === "" || props.img === "-" ? <div className="img-filler"></div> : (
+          <img src={props.img} alt="artist profile pic" draggable="false"></img>
         )}{" "}
-      </div>
       <div className="card-name">{props.name} </div>
     </li>
   );

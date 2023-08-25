@@ -98,7 +98,7 @@ export default function SearchBar({setMatching, setArtistartistScrollCounter, li
         <div className="magnifying-glass">
           <div className="mg-circle"></div> <div className="mg-handle"></div>
         </div>
-        <input type="text" className="searchbar" ref={inputRef}></input>
+        <input type="text" className="searchbar" ref={inputRef} title="search"></input>
       </div>
     </form>
   );

@@ -13,7 +13,7 @@ export default function ArtistSelector({ matchingArtists, onClick, sC, setSC }) 
           <div className="loader list-loader"></div>
         </ul>
       ) : (
-        <div>
+        <>
           {sC > 0 && (
             <button
               className="arrow"
@@ -44,7 +44,7 @@ export default function ArtistSelector({ matchingArtists, onClick, sC, setSC }) 
               );
             })}
           </ul>
-        </div>
+        </>
       )}
     </div>
   );
