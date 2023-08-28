@@ -2,7 +2,6 @@ import LoginHook from "./hooks/LoginHook";
 import { Link } from "react-router-dom";
 
 export default function LogoutButton(props) {
-  {console.log("123")}
   LoginHook(props.code);
 
   function logout() {

@@ -1,21 +1,26 @@
-import PlaylistSelector from "./PlaylistSelector";
-import PlaylistList from "./PlaylistList";
+import SearchResults from "../Creating/SearchResults";
 import { useState, useContext } from "react";
 import { UserContext } from "../../App";
 import SearchBar from "../Creating/Playlist Modification Tools/SearchBar";
-import UpdatePlaylistBtn from "../Creating/Playlist Modification Tools/UpdatePlaylistBtn";
+import PlaylistBtn from "../Creating/Playlist Modification Tools/PlaylistBtn";
 
 export default function PlaylistUpdater() {
   const UserContextValues = useContext(UserContext);
+
+  //list of selected playlists
   const [playlistList, setPlaylistList] = useState([]);
+
   const playlists = UserContextValues.playlists;
+  const [playlistScrollCounter, setPlaylistScrollCounter] = useState(0);
+  const [selectedPlaylistScrollCounter, setSelectedPlaylistScrollCounter] =
+    useState(0);
 
   const [matchingPlaylists, setMatchingPlaylists] = useState(
     Array.from(playlists).map(([key, value]) => ({
       id: key,
-      artist_id: value.artist_id,
-      img: value.img,
       name: value.name,
+      img: value.img,
+      artist_id: value.artist_id
     }))
   );
 
@@ -47,19 +52,28 @@ export default function PlaylistUpdater() {
         list={playlists}
         category={"playlist"}
       />
-      <UpdatePlaylistBtn
-        playlists={playlistList}
-        setPlaylists={setPlaylistList}
-        onClick={removePlaylist}
+      <PlaylistBtn
+        selected={playlistList}
+        setSelected={setPlaylistList}
+        type={"update"}
       />
-      <PlaylistSelector
+      <SearchResults
+        matchingResults={matchingPlaylists}
         onClick={addPlaylist}
-        matchingPlaylists={matchingPlaylists}
+        sC={playlistScrollCounter}
+        setSC={setPlaylistScrollCounter}
+        userData={playlists}
+        type={"playlist"}
+        type2={"search-results"}
       />
-      <PlaylistList
-        playlists={playlistList}
-        setPlaylists={setPlaylistList}
+      <SearchResults
+        matchingResults={playlistList}
         onClick={removePlaylist}
+        sC={selectedPlaylistScrollCounter}
+        setSC={setSelectedPlaylistScrollCounter}
+        userData={playlists}
+        type={"playlist"}
+        type2={"selected-results"}
       />
     </div>
   );

@@ -1,6 +1,6 @@
 import { useRef } from "react";
 
-export default function SearchBar({setMatching, setArtistartistScrollCounter, list, category}) {
+export default function SearchBar({setMatching, setResultsScrollCounter, list, category}) {
   const inputRef = useRef();
 
   function updateMap(data) {
@@ -17,7 +17,7 @@ export default function SearchBar({setMatching, setArtistartistScrollCounter, li
   function create(event) {
     event.preventDefault();
     setMatching([]);
-    setArtistartistScrollCounter(0);
+    setResultsScrollCounter(0);
     const enteredTerm = inputRef.current.value;
     let count = 0;
     let current_string = "";
@@ -40,7 +40,6 @@ export default function SearchBar({setMatching, setArtistartistScrollCounter, li
         }
 
         if (count > 0) {
-          console.log(current_string);
           fetch(
             `/api/${category}s/images?${category}_ids=${current_string}`,
             {

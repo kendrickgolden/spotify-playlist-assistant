@@ -3,8 +3,8 @@ import LoginButton from "./components/LoginButton";
 import LogoutButton from "./components/LogoutButton";
 import Nav from "./components/Nav";
 import PlaylistInfo from "./components/PlaylistInfo";
-import PlaylistCreator from "./components/Creating/PlaylistCreator";
-import PlaylistUpdater from "./components/Updating/PlaylistUpdater";
+import MainPageCreate from "./components/Creating/MainPageCreate";
+import MainPageUpdate from "./components/Creating/MainPageUpdate";
 import { Route, Routes, Link } from "react-router-dom";
 
 const params = new URLSearchParams(window.location.search);
@@ -32,13 +32,15 @@ function App() {
           <hr id="header-line"></hr>
         </header>
         <div id="sidebar">
+        {code ? (<div></div>) : null}
           <Nav />
         </div>
         <div id="main-page">
           <Routes>
             <Route path="/" element={<PlaylistInfo />} />
-            <Route path="/create" element={<PlaylistCreator />} />
-            <Route path="/update" element={<PlaylistUpdater />} />
+            <Route path="/create" element={<MainPageCreate/>} />
+            {/*TODO: Figure out how to re-render MainPage element */}
+            <Route path="/update" element={<MainPageUpdate />} />
           </Routes>
         </div>
       </UserContext.Provider>

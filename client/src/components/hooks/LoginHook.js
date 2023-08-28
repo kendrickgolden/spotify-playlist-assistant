@@ -19,8 +19,6 @@ export default function LoginHook(code) {
         return response.json();
       })
       .then((data) => {
-        console.log(data.playlists);
-        console.log(data.artists);
         setArtists(new Map(Object.entries(data.artists)));
         setPlaylists(new Map(Object.entries(data.playlists)));
       })

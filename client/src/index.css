@@ -206,30 +206,30 @@ header h1 {
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
         "selector result-info"
-        "selection selection"
+        "search-results search-results"
         "playlist-btn queue-info"
         "queue queue";
     place-items: center;
 }
 
-.queue-container {
+.results-container {
     position: relative;
     height: 100%;
     width: 100%;
     overflow: hidden;
 }
 
-#queue {
+#selected-results {
     grid-area: queue;
     border-top: 10px;
 }
 
-#selection {
-    grid-area: selection;
+#search-results {
+    grid-area: search-results;
 }
 
 
-.result-list {
+.results-list {
     position: relative;
     width: 100%;
     height: 100%;
