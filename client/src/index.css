@@ -50,42 +50,54 @@ header {
     grid-area: header;
     position: relative;
     height: 60px;
-    text-align: center;
     background: hsl(0 0% 98%);
-    /* border-bottom: 1px;
-    border-style: hidden hidden solid hidden;
-    border-color: hsl(0,0%,20%);*/
     box-shadow: 0px 0px 5px hsl(0, 0%, 10%);
     z-index: 2;
+    align-items: center;
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    padding-left: 10%;
+    padding-right: 0%;
 }
-
-header h1 {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 2em;
-    color: hsl(0, 0%, 10%);
-}
-
 
 #home-link {
     text-decoration: none;
+    position: relative;
+    color: hsl(0, 0%, 10%);
+    width: fit-content;
 }
 
-#sign-IO-btn {
-    position: absolute;
-    right: 10%;
-    top: 50%;
-    transform: translateY(-50%);
-    border-width: 1px;
-    border-radius: 5%;
-    padding: 5px;
-    height: 30px;
-    width: 80px;
-    color: white;
+
+header h1 {
+    position: relative;
+    font-size: 2em;
+    left: 0.5%;
+}
+
+.login-btn {
     background: hsl(0 0% 10%);
+    text-align: center;
+
+    border-radius: 5%;
 }
 
+.login-btn a {
+    position: relative;
+    text-decoration: none;
+    color: white;
+    width: 100%;
+    height: 100%;
+}
+
+#main-login {
+    position: relative;
+    width: 30%;
+    height: fit-content;
+    padding: 5% 1% 5% 1%;
+    left: 50%;
+    font-size: 1em;
+    white-space: nowrap;
+}
 
 
 #header-line {
@@ -102,20 +114,46 @@ header h1 {
 #sidebar {
     grid-area: sidebar;
     position: relative;
-    background: hsl(0 0% 90%);
-    /*box-shadow: 0px 0px 5px hsl(0, 0%, 10%);*/
+    background: hsl(0 0% 10%);
     z-index: 1;
+    font-size: 2em;
 }
 
+#sidebar-lock {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: hsla(0, 0%, 50%, 0.95);
+    z-index: 3;
+
+}
+
+#sidebar-login {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: fit-content;
+    padding: 5%;
+}
+
+#sidebar-login a {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#active {
+    background-color: hsl(0 0% 70%);
+}
 
 
 /*NAVIGATION*/
 #main-nav {
     position: relative;
-    margin: 10%;
-    width: 80%;
+    width: 100%;
     height: 80%;
-    background: hsl(0 0% 84%);
 }
 
 #main-nav ul {
@@ -128,21 +166,23 @@ header h1 {
     list-style-type: none;
 }
 
-#main-nav li {
+.sidebar-options {
     position: relative;
     height: 20%;
-    max-height: 250px;
-    border-bottom: solid 1px black;
+    min-width: fit-content;
+    border-bottom: solid 1px hsl(0 0% 98%);
 }
 
-#main-nav li:active {
+.sidebar-options:hover {
+    background-color: lightgray;
+}
+
+.sidebar-options:active {
     border-style: solid;
     border-width: 2px;
 }
 
-#main-nav li:hover {
-    background-color: lightgray;
-}
+
 
 #main-nav a {
     position: absolute;
@@ -154,8 +194,43 @@ header h1 {
     justify-content: center;
     text-align: center;
     font-size: larger;
-    color: hsl(0 0% 0%);
+    color: hsl(0 0% 98%);
 }
+
+.info-tooltip {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: hsl(0 0% 98%);
+    top: 50%;
+    left: 90%;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: .5em;
+    font-weight: 900;
+}
+
+.info-tooltip:hover::before {
+    position: absolute;
+    height: 200px;
+    width: 200px;
+    background-color: hsl(0 0% 98%);
+    content: attr(tooltip);
+    width: max-content;
+    height: max-content;
+    padding: 10px;
+    max-width: 1000%;
+    border-radius: 10%;
+
+}
+
+/*
+.info-tooltip:hover::before {
+    content: attr(tooltip);
+}*/
 
 
 /*MAIN BODY*/
@@ -163,7 +238,8 @@ header h1 {
     grid-area: body;
     position: relative;
     padding-top: 1%;
-    background: hsl(0 0% 90%);
+    background: hsl(0 0% 95%);
+
 }
 
 
@@ -184,7 +260,7 @@ header h1 {
 
 .playlist-info {
     position: relative;
-    width: 90%;
+    width: 80%;
     left: 50%;
     transform: translateX(-50%);
     padding: 50px;
@@ -192,8 +268,8 @@ header h1 {
     border-style: solid;
     border-width: 2px;
     text-align: center;
-    border-radius: 50px;
-
+    background-color: hsl(0 0% 91%);
+    font-size: 5em;
 }
 
 /*Playlist Creator*/
@@ -202,7 +278,7 @@ header h1 {
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-rows: .5fr 4fr .5fr 4fr;
+    grid-template-rows: .75fr 4fr .75fr 4fr;
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
         "selector result-info"
@@ -217,6 +293,8 @@ header h1 {
     height: 100%;
     width: 100%;
     overflow: hidden;
+    font-size: 1.5em;
+    font-weight: 800;
 }
 
 #selected-results {
@@ -238,6 +316,7 @@ header h1 {
     flex-direction: row;
     align-content: center;
     color: black;
+    background-color: hsl(0 0% 95%);
 }
 
 .arrow {
@@ -299,6 +378,10 @@ header h1 {
     font-weight: 100;
 }
 
+.playlist-btn div {
+    font-size: 15px;
+}
+
 .list-loader {
     position: absolute;
     left: 50%;
@@ -330,33 +413,40 @@ header h1 {
     position: absolute;
     left: 0;
     display: grid;
-    grid-template-columns: 1fr 4fr;
+    grid-template-columns: 1fr;
     height: 100%;
     width: 60%;
     align-items: center;
+    padding-left: 1%;
+}
+
+.selector label {
+    display: none;
 }
 
 .searchbar-container {
     position: relative;
     border-style: none;
     height: 80%;
-    width: 50%;
+    width: 80%;
     border-radius: 50px;
     border-width: 1px;
     display: grid;
     grid-template-columns: 1fr 4fr;
-    background: hsl(0 0% 80%);
+    background: hsl(0 0% 70%);
 }
 
 
 .searchbar {
     position: relative;
     border-radius: 50px;
-    font-size: 1em;
+    font-size: 1.5em;
     border-style: none;
     background: transparent;
     left: 0;
     width: 100%;
+    z-index: 2;
+    line-height: 1.5em;
 }
 
 .searchbar:focus {
@@ -392,21 +482,23 @@ header h1 {
 
 }
 
-#result-info {
-    grid-area: result-info;
+.info {
     position: absolute;
     right: 10%;
     color: blue;
-    font-size: large;
+    font-size: 1.2em;
+    font-weight: 500;
+}
+
+#result-info {
+    grid-area: result-info;
+
 
 }
 
 #queue-info {
     grid-area: queue-info;
-    position: absolute;
-    right: 10%;
-    color: blue;
-    font-size: large;
+
 }
 
 /*Search & Selection cards*/
@@ -414,6 +506,9 @@ header h1 {
     position: relative;
     flex: 0 0 20%;
     padding: .5rem;
+
+    /*prevents text overflow*/
+    min-width: 0;
 }
 
 .card img,
@@ -423,12 +518,22 @@ header h1 {
     max-height: 100%;
     aspect-ratio: 1 / 1;
     width: auto;
-    border-radius: 1%;
+    border-radius: 50%;
 }
 
+.img-filler {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .card-name {
     text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 1em;
+    font-weight: 500;
 }
 
 .card-options {

@@ -29,7 +29,7 @@ router.get('/',async function(req, res) {
         var fetchPromise = fetch(`https://api.spotify.com/v1/users/${user_id}/playlists`, {
             method: 'POST',
             headers: { 'Authorization' : 'Bearer ' + token},
-            body: JSON.stringify({"name" : "Artist Playlist: " + value.artist_name})
+            body: JSON.stringify({"name" : value.artist_name +  ": Artist Playlist"})
             
         });
 

@@ -4,6 +4,7 @@ export default function PlaylistBtn({ selected, setSelected, type }) {
   const [loading, setLoading] = useState(false);
 
   function modifyPlaylists() {
+    console.log("test123");
     if (selected.length === 0) {
       return;
     }

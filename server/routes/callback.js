@@ -15,7 +15,7 @@ router.get("/", async function (req, res) {
   const code = req.query.code || null;
   const redirect_uri = req.query.redirect_uri || null;
 
-  //console.log("test1");
+  console.log(redirect_uri); 
   let fetchPromise = fetch(
     `https://accounts.spotify.com/api/token/?grant_type=authorization_code&code=${code}&redirect_uri=${redirect_uri}`,
     {

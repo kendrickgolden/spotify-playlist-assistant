@@ -14,6 +14,7 @@ router.get('/', async function(req, res) {
     const user_id = callbackRouter.user_id;
     const token = callbackRouter.token;
 
+    console.log("requested: " + req_playlists);
     await getPlaylists(req_playlists);
     addNewSongs(artist_map); 
     await updatePlaylists();
@@ -99,7 +100,6 @@ router.get('/', async function(req, res) {
                         } else {
                             track_uris_segment = track_uris.splice(0,100);
                         }
-                        //console.log(track_uris_segment);
                         let fetchPromise = fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks?position=0`, {
                             method: 'POST',
                             headers: { 'Authorization' : 'Bearer ' + token},

@@ -5,7 +5,7 @@ export default function LoginHook(code) {
   const UserContextValues = useContext(UserContext);
   const setArtists = UserContextValues.setArtists;
   const setPlaylists = UserContextValues.setPlaylists;
-  const redirect_uri = window.location;
+  let redirect_uri = window.location.href.split("?")[0];
 
   window.history.pushState({}, null, "/");
   useEffect(() => {

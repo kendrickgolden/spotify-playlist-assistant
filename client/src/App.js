@@ -25,20 +25,25 @@ function App() {
             <h1>Spotify Playlist Assistant</h1>
           </Link>
           {code ? (
-            <LogoutButton code={code} onClick={setCode} />
+            <LogoutButton code={code} onClick={setCode} id='main-login'/>
           ) : (
-            <LoginButton />
+            <LoginButton id='main-login'/>
           )}
           <hr id="header-line"></hr>
         </header>
         <div id="sidebar">
-        {code ? (<div></div>) : null}
+          {code ? null : (
+            <div id="sidebar-lock">
+              {" "}
+              <LoginButton id='sidebar-login'/>{" "}
+            </div>
+          )}
           <Nav />
         </div>
         <div id="main-page">
           <Routes>
-            <Route path="/" element={<PlaylistInfo />} />
-            <Route path="/create" element={<MainPageCreate/>} />
+            <Route path="/" element={<PlaylistInfo code={code} />} />
+            <Route path="/create" element={<MainPageCreate />} />
             {/*TODO: Figure out how to re-render MainPage element */}
             <Route path="/update" element={<MainPageUpdate />} />
           </Routes>

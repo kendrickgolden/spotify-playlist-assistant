@@ -4,7 +4,7 @@ import { UserContext } from "../../App";
 import PlaylistBtn from "./Playlist Modification Tools/PlaylistBtn";
 import SearchBar from "./Playlist Modification Tools/SearchBar";
 
-export default function MainPage() {
+export default function MainPageCreate() {
   //list of search results
   const [matchingResults, setMatchingResults] = useState([]);
   //list of selected items
@@ -56,14 +56,14 @@ export default function MainPage() {
         type={"create"}
       />
       {matchingResults.length > 0 && (
-        <div id="result-info">
+        <div id="result-info" className="info">
           {resultsScrollCounter * 5 + 1} -{" "}
           {Math.min((resultsScrollCounter + 1) * 5, matchingResults.length)} of{" "}
-          {matchingResults.length} results
+          {matchingResults.length} result{matchingResults.length != 1 && 's'}
         </div>
       )}
 
-      <div id="queue-info">{selectedList.length} playlists to be created</div>
+      <div id="queue-info" className="info">{selectedList.length} playlist{selectedList.length != 1 && 's'}  to be created</div>
       <SearchResults
         matchingResults={matchingResults}
         onClick={addItem}

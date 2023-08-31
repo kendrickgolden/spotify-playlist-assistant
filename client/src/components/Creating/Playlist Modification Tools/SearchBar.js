@@ -90,13 +90,13 @@ export default function SearchBar({setMatching, setResultsScrollCounter, list, c
   }
 
   return (
-    <form className="selector" onKeyUp={create} onSubmit={create}>
-      <label htmlFor="searchbar">Search {category}s: </label>
+    <form className="selector" onKeyUp={create} onSubmit={create} spellCheck="false">
+      <label htmlFor="searchbar"> </label>
       <div className="searchbar-container">
         <div className="magnifying-glass">
           <div className="mg-circle"></div> <div className="mg-handle"></div>
         </div>
-        <input type="text" className="searchbar" ref={inputRef} title="search"></input>
+        <input type="text" className="searchbar" ref={inputRef} placeholder={'Search ' + category + 's'}></input>
       </div>
     </form>
   );
