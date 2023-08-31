@@ -4,7 +4,7 @@ export default function LoginButton({ id }) {
   const client_id = "e1adb4658a2e48c99de92234a1396eeb";
   const scope =
     "user-library-read playlist-modify-private playlist-modify-public";
-  const redirect_uri = window.location + 'create';
+  const redirect_uri = window.location + 'create/';
   console.log(redirect_uri);
 
   //TODO: Implement state as query parameter
